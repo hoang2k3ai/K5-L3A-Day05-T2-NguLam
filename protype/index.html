@@ -1,0 +1,710 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Trợ lý Study Buổi 3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: thanh tab trên cùng; màn Học viên = cột chat + cột "Việc AI vừa làm"; màn TA = hàng chờ; màn Tự chủ = bảng 4 tool. */
+:root {
+  --bg: #f1f4f8;
+  --surface: #ffffff;
+  --ink: #14202e;
+  --muted: #566779;
+  --line: #d8e0e9;
+  --accent: #1f4fd8;
+  --accent-soft: #e3eafc;
+  --accent-ink: #ffffff;
+  --ok: #11703f;
+  --ok-soft: #dff2e8;
+  --warn: #8f5200;
+  --warn-soft: #fcefd2;
+  --none: #4a5a6b;
+  --none-soft: #e6ebf1;
+  --stop: #a6261f;
+  --stop-soft: #fae3e1;
+  --font: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d131a; --surface: #151e28; --ink: #e5ecf4; --muted: #92a2b4; --line: #26323f;
+    --accent: #84a6ff; --accent-soft: #1b2a4e; --accent-ink: #0d131a;
+    --ok: #62d09b; --ok-soft: #123220; --warn: #f1b455; --warn-soft: #3a2b0e;
+    --none: #a3b2c3; --none-soft: #1e2935; --stop: #ff8f87; --stop-soft: #3d1c1a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d131a; --surface: #151e28; --ink: #e5ecf4; --muted: #92a2b4; --line: #26323f;
+  --accent: #84a6ff; --accent-soft: #1b2a4e; --accent-ink: #0d131a;
+  --ok: #62d09b; --ok-soft: #123220; --warn: #f1b455; --warn-soft: #3a2b0e;
+  --none: #a3b2c3; --none-soft: #1e2935; --stop: #ff8f87; --stop-soft: #3d1c1a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 20px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+.mono { font-family: var(--mono); font-size: 0.86em; }
+
+/* Header khoá học */
+.top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; justify-content: space-between; padding-bottom: 16px; }
+.top h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; }
+.crumb { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.ctx { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.82rem; color: var(--muted); }
+.ctx b { color: var(--ink); font-weight: 600; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 18px; align-items: flex-end; }
+.tab { background: none; border: 0; padding: 10px 14px; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab .count { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 6px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-size: 0.72rem; text-align: center; }
+.tools-right { margin-left: auto; display: flex; gap: 8px; padding-bottom: 6px; }
+.toggle { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 5px 10px; font-size: 0.8rem; font-weight: 500; }
+.toggle[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); }
+
+/* Màn học viên */
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 880px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; min-width: 0; }
+.chat-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.chat-head .title { font-weight: 700; }
+.scope { display: inline-flex; gap: 6px; align-items: center; font-size: 0.8rem; color: var(--muted); }
+.scope .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+.clock { margin-left: auto; font-size: 0.78rem; color: var(--muted); }
+.thread { display: flex; flex-direction: column; gap: 18px; padding: 16px; min-height: 320px; max-height: 640px; overflow-y: auto; }
+.me { align-self: flex-end; max-width: 82%; background: var(--accent); color: var(--accent-ink); padding: 9px 13px; border-radius: 14px 14px 3px 14px; overflow-wrap: anywhere; }
+.ai { align-self: flex-start; max-width: 96%; display: flex; flex-direction: column; gap: 10px; }
+.ai .body { background: var(--bg); border: 1px solid var(--line); border-radius: 3px 14px 14px 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.ai .body ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.ai .who { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.row { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+
+.badge { display: inline-flex; gap: 6px; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.badge.warn { background: var(--warn-soft); color: var(--warn); }
+.badge.none { background: var(--none-soft); color: var(--none); }
+.cite { font-family: var(--mono); font-size: 0.78rem; padding: 2px 8px; border-radius: 5px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.cite.src { border-style: dashed; color: var(--muted); }
+
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 7px; padding: 7px 12px; font-weight: 600; font-size: 0.86rem; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.flag { border-color: var(--warn); color: var(--warn); background: var(--warn-soft); }
+.btn.small { padding: 3px 9px; font-size: 0.78rem; font-weight: 500; }
+.btn[disabled] { opacity: 0.55; cursor: default; }
+.sent { font-size: 0.85rem; background: var(--ok-soft); color: var(--ok); border-radius: 7px; padding: 7px 10px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.sent.off { background: var(--none-soft); color: var(--none); }
+
+.preview { border: 1px solid var(--warn); background: var(--warn-soft); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem; }
+.preview ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+.preview li span { font-weight: 700; }
+.promise { padding: 12px 16px 14px; font-size: 0.88rem; }
+.composer { border-top: 1px solid var(--line); padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 10px; }
+.chips-label { font-size: 0.74rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 11px; font-size: 0.82rem; }
+.chip:hover { border-color: var(--accent); }
+.chip.hard::after { content: "ca khó"; margin-left: 7px; font-size: 0.68rem; color: var(--warn); font-weight: 700; }
+.field { display: flex; gap: 8px; }
+.field input { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 9px 12px; }
+.note { font-size: 0.78rem; color: var(--muted); }
+
+/* Cột bên: việc AI vừa làm */
+.side { display: flex; flex-direction: column; gap: 16px; }
+.side h2 { font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 12px 16px 0; }
+.log { list-style: none; margin: 0; padding: 8px 16px 14px; display: flex; flex-direction: column; gap: 10px; }
+.log li { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+.log li:first-child { border-top: 0; padding-top: 0; }
+.log .nm { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.log .res { font-size: 0.84rem; color: var(--muted); }
+.lvl { font-size: 0.7rem; font-weight: 700; padding: 1px 7px; border-radius: 4px; letter-spacing: 0.02em; }
+.lvl.auto { background: var(--ok-soft); color: var(--ok); }
+.lvl.approve { background: var(--warn-soft); color: var(--warn); }
+.lvl.ban { background: var(--stop-soft); color: var(--stop); }
+.state { font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+.rules { padding: 8px 16px 14px; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; }
+.rules li::before { content: "✕ "; color: var(--stop); font-weight: 700; }
+
+/* Chú thích HAX */
+.pin { display: none; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 50%; background: var(--stop); color: #fff; font-size: 0.7rem; font-weight: 700; font-family: var(--font); flex: none; }
+body.notes .pin { display: inline-flex; }
+.legend { display: none; margin-top: 16px; padding: 14px 16px; }
+body.notes .legend.on { display: block; }
+.legend h2 { padding: 0 0 8px; }
+.legend ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px 20px; }
+.legend li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.86rem; }
+.legend li b { display: block; }
+
+/* Màn TA */
+.view { display: none; }
+.view.on { display: block; }
+.queue { display: flex; flex-direction: column; gap: 12px; }
+.qi { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.qi.withdrawn { opacity: 0.6; }
+.qi .meta { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 0.82rem; color: var(--muted); }
+.qi .q { font-weight: 600; }
+.qi dl { margin: 0; display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 4px 12px; font-size: 0.86rem; }
+.qi dt { color: var(--muted); }
+.qi dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 520px) { .qi dl { grid-template-columns: minmax(0, 1fr); } .qi dt { margin-top: 6px; } }
+.kind { font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.kind.ask { background: var(--accent-soft); color: var(--accent); }
+.kind.doc { background: var(--warn-soft); color: var(--warn); }
+.empty-q { padding: 28px 16px; text-align: center; color: var(--muted); }
+.sec-head { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.sec-head h2 { font-size: 1.1rem; }
+.sec-head p { color: var(--muted); font-size: 0.86rem; max-width: 60ch; }
+
+/* Màn tự chủ */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.tg { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.tg h3 { font-size: 1rem; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tg dl { margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem; }
+.tg dt { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.tg dd { margin: 0; }
+.hardest { margin-top: 12px; padding: 16px; border-left: 4px solid var(--warn); border-radius: 0 10px 10px 0; background: var(--warn-soft); font-size: 0.9rem; display: flex; flex-direction: column; gap: 6px; }
+.hardest b { color: var(--warn); }
+@media (prefers-reduced-motion: no-preference) { .thread { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="crumb">Nhập môn phân tích dữ liệu · Buổi 3 · Thống kê mô tả</div>
+      <h1>Trợ lý học bài</h1>
+    </div>
+    <div class="ctx" aria-label="Trạng thái trang khoá học">
+      <span>Bài tập 3: <b>đang mở</b>, hạn 13/11/2026 23:59</span>
+      <span>Giờ TA: <b>08:00–22:00</b></span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Màn hình prototype">
+    <button class="tab" role="tab" id="tab-hoc-vien" data-view="hoc-vien" aria-selected="true">Học viên</button>
+    <button class="tab" role="tab" id="tab-ta" data-view="ta" aria-selected="false">Phía TA <span class="count" id="qcount" hidden>0</span></button>
+    <button class="tab" role="tab" id="tab-tu-chu" data-view="tu-chu" aria-selected="false">Mức tự chủ</button>
+    <div class="tools-right">
+      <button class="toggle" id="notesBtn" aria-pressed="true">Chú thích HAX</button>
+    </div>
+  </nav>
+
+  <!-- MÀN 1: HỌC VIÊN -->
+  <section class="view on" id="view-hoc-vien" role="tabpanel" aria-labelledby="tab-hoc-vien">
+    <div class="stage">
+      <div class="panel">
+        <div class="chat-head">
+          <span class="title">Hỏi bài</span>
+          <span class="scope"><span class="dot"></span>Chỉ dựa trên tài liệu buổi 1–3 và trang khoá học <span class="pin">1</span></span>
+          <span class="clock mono" id="clock">22:40 · 12/11/2026</span>
+        </div>
+        <div class="thread" id="thread" aria-live="polite"></div>
+        <div class="composer">
+          <div class="chips-label">Thử một ca</div>
+          <div class="chips" id="chips"></div>
+          <form class="field" id="form">
+            <input id="ask" type="text" autocomplete="off" placeholder="Hoặc gõ một câu lạ để thử" aria-label="Câu hỏi của học viên">
+            <button class="btn primary" type="submit">Gửi</button>
+          </form>
+          <p class="note">Prototype chạy kịch bản dựng sẵn, không gọi AI thật. Câu gõ tự do được so khớp theo từ khoá; câu không khớp sẽ rơi vào ca "tài liệu không có".</p>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="panel">
+          <h2>Việc AI vừa làm <span class="pin">6</span></h2>
+          <ul class="log" id="log"></ul>
+        </div>
+        <div class="panel">
+          <h2>Lời hứa với học viên</h2>
+          <p class="promise">"Mình giảng kèm mục tài liệu và gợi ý từng bước. Mình không đưa hay xác nhận đáp số bài đang mở. Việc gì cần người, mình đưa bạn nút để chuyển TA, và chỉ nói đã chuyển khi nó thật sự đã vào hàng chờ."</p>
+        </div>
+        <div class="panel">
+          <h2>AI không bao giờ</h2>
+          <ul class="rules">
+            <li>Đưa hoặc xác nhận đáp số bài đang mở</li>
+            <li>Nhận xét năng lực người học</li>
+            <li>Nhắc nguồn không có trong tài liệu</li>
+            <li>Nói "đã báo TA" khi việc chưa xong</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <div class="panel legend on" id="legend">
+      <h2>Mỗi nguyên tắc nằm ở đâu trên màn hình</h2>
+      <ul>
+        <li><span class="pin">1</span><div><b>G1 · Nói rõ AI làm được gì</b>Dải phạm vi trên khung chat nêu đúng nguồn AI được dựa vào.</div></li>
+        <li><span class="pin">2</span><div><b>G2 · Nói rõ AI chắc đến đâu</b>Nhãn độ chắc: có căn cứ, chưa chắc, hoặc không có căn cứ.</div></li>
+        <li><span class="pin">3</span><div><b>G11 · Nói rõ vì sao</b>Mã mục (§3.2…) và trang khoá học đi kèm mỗi câu trả lời.</div></li>
+        <li><span class="pin">4</span><div><b>G10 · Khi nghi ngờ, thu hẹp phạm vi</b>Không biết thì nói thẳng, rồi đưa nút đi tiếp: chuyển TA hoặc báo tài liệu sai.</div></li>
+        <li><span class="pin">5</span><div><b>G9 · Sửa nhanh</b>Nút "Rút lại" ngay sau khi chuyển TA, và trong hàng chờ của TA.</div></li>
+        <li><span class="pin">7</span><div><b>Cần người duyệt</b>Chuyển TA phải qua bước xem lại: gửi gì, không gửi gì, bao giờ có trả lời. Chưa bấm "Gửi" thì chưa có gì rời máy học viên.</div></li>
+        <li><span class="pin">6</span><div><b>G11 · Lộ việc đã làm</b>Cột bên liệt kê từng tool, mức tự chủ của nó, và việc nào chưa chạy vì cần học viên bấm.</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MÀN 2: TA -->
+  <section class="view" id="view-ta" role="tabpanel" aria-labelledby="tab-ta">
+    <div class="sec-head">
+      <h2>Hàng chờ câu được chuyển</h2>
+      <p>TA thấy câu hỏi, AI đã nói gì, căn cứ nào, hạn bài, và có cờ "tài liệu có thể sai" hay không. Chỉ những câu học viên đã bấm chuyển mới vào đây.</p>
+    </div>
+    <div class="queue" id="queue"></div>
+  </section>
+
+  <!-- MÀN 3: TỰ CHỦ -->
+  <section class="view" id="view-tu-chu" role="tabpanel" aria-labelledby="tab-tu-chu">
+    <div class="sec-head">
+      <h2>Mỗi tool một mức tự chủ, theo cái giá khi sai</h2>
+      <p>Sai ở đây rẻ mỗi lần nhưng âm thầm: học viên học sai mà không biết. Vì vậy mức được đặt theo việc sai có bị phát hiện kịp hay không.</p>
+    </div>
+    <div class="tool-grid">
+      <article class="panel tg">
+        <h3><span class="mono">tra_cuu_tai_lieu</span> <span class="lvl auto">TỰ LÀM</span></h3>
+        <dl>
+          <div><dt>Giá khi sai</dt><dd>Thấp. Chỉ đọc; sai thì cùng lắm là không tìm thấy mục.</dd></div>
+          <div><dt>Điều kiện</dt><dd>Luôn hiện mã mục. Không có kết quả thì AI nói "tài liệu không có", không điền bằng kiến thức ngoài.</dd></div>
+          <div><dt>Đã thử trên</dt><dd>Ca slide 12 (0 kết quả), ca buổi 7, ca bình thường "trung vị khác trung bình".</dd></div>
+        </dl>
+      </article>
+      <article class="panel tg">
+        <h3><span class="mono">goi_y_bai_tap</span> <span class="lvl auto">TỰ LÀM, CÓ TRẦN</span></h3>
+        <dl>
+          <div><dt>Giá khi sai</dt><dd>Cao nhất trong bốn tool. Gợi ý quá tay thì học viên đã chép và không lấy lại được.</dd></div>
+          <div><dt>Điều kiện</dt><dd>Bài đang mở: chỉ bước đầu, một bước mỗi lượt. Bài đã hết hạn và có đáp án: giải thích đầy đủ. Xác nhận đáp số: cấm.</dd></div>
+          <div><dt>Đã thử trên</dt><dd>Ca giải hộ bài 3, ca xác nhận đáp số, ca đáp án bài 2.</dd></div>
+        </dl>
+      </article>
+      <article class="panel tg">
+        <h3><span class="mono">chuyen_TA</span> <span class="lvl approve">HỌC VIÊN BẤM</span></h3>
+        <dl>
+          <div><dt>Giá khi sai</dt><dd>Thấp, đảo lại được. Rủi ro lớn hơn là lời hứa: nói "đã báo TA" khi chưa gọi tool.</dd></div>
+          <div><dt>Điều kiện</dt><dd>AI chỉ đề xuất. Chỉ sau khi học viên bấm và tool trả kết quả, màn hình mới ghi "đã đưa vào hàng chờ". Luôn kèm giờ TA trả lời và nút rút lại.</dd></div>
+          <div><dt>Đã thử trên</dt><dd>Ca xác nhận đáp số lúc 22:40 (TA trả lời từ 08:00), ca tài liệu sai.</dd></div>
+        </dl>
+      </article>
+      <article class="panel tg">
+        <h3><span class="mono">dang_FAQ</span> <span class="lvl ban">CẤM VỚI AI</span></h3>
+        <dl>
+          <div><dt>Giá khi sai</dt><dd>Gỡ được, nhưng cả lớp đã đọc. Đăng một câu trả lời sai là học sai hàng loạt.</dd></div>
+          <div><dt>Điều kiện</dt><dd>AI không tự đăng. Chỉ TA hoặc giảng viên đăng, sau khi đã kiểm tài liệu.</dd></div>
+          <div><dt>Đã thử trên</dt><dd>Ca tài liệu sai: AI không đăng "độ lệch chuẩn nhỏ hơn phương sai" lên FAQ dù học viên hỏi.</dd></div>
+        </dl>
+      </article>
+    </div>
+    <div class="hardest">
+      <p><b>Tool khó xếp nhất: goi_y_bai_tap.</b> Mức "cần người duyệt" nghe an toàn hơn, nhưng người duyệt là TA và TA nghỉ sau 22:00, đúng lúc học viên cần. Duyệt trước sẽ chặn chính nhu cầu của sản phẩm.</p>
+      <p><b>Cách chốt:</b> cho tự làm nhưng đặt trần cứng theo trạng thái bài (mở thì một bước đầu, đóng thì đầy đủ) và tách riêng "xác nhận đáp số" thành việc bị cấm. Trần dựa trên trang khoá học, không dựa trên điều học viên nói.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var TOOLS = {
+    tra: 'tra_cuu_tai_lieu', goi: 'goi_y_bai_tap', ta: 'chuyen_TA', faq: 'dang_FAQ'
+  };
+  var LEVEL = { auto: 'TỰ LÀM', approve: 'HỌC VIÊN BẤM', ban: 'CẤM' };
+
+  var SC = {
+    meaning: {
+      hard: false, q: 'Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?',
+      conf: ['ok', 'Có căn cứ trong tài liệu'], cites: ['§3.1', '§3.2'],
+      body: [
+        '<p>Trung bình cộng là tổng các giá trị chia cho số giá trị, và bị kéo mạnh bởi giá trị ngoại lai (§3.1).</p>',
+        '<p>Trung vị là giá trị đứng giữa khi sắp xếp tăng dần; nếu số giá trị chẵn thì lấy trung bình cộng của hai giá trị giữa (§3.2). Trung vị ít bị ngoại lai ảnh hưởng, nên tài liệu dùng nó cho dữ liệu lệch như thu nhập hay giá nhà.</p>',
+        '<p>Bạn thử nghĩ: nếu trong một phòng có một người lương cao hơn hẳn, con số nào mô tả người "điển hình" tốt hơn?</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.1 và §3.2' }
+      ],
+      actions: []
+    },
+    solve: {
+      hard: true, q: 'Giải giúp em bài 3 với, đáp số là bao nhiêu ạ?',
+      conf: ['ok', 'Có căn cứ trong tài liệu'], cites: ['§3.5', '§3.1', '§3.2', 'Trang khoá học'],
+      body: [
+        '<p>Bài 3 đang mở (hạn 23:59 ngày 13/11/2026, theo trang khoá học), nên mình không đưa đáp số. Mình chỉ gợi ý bước đầu:</p>',
+        '<ol><li>Đề cho 8 giá trị lương. Trung bình cộng là tổng chia số giá trị (§3.1). Bạn thử cộng 8 giá trị trong bảng tính và xem tổng bạn được.</li></ol>',
+        '<p>Làm xong bước này, gửi mình kết quả của bạn, mình sẽ hỏi bước tiếp theo.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.5, §3.1, §3.2' },
+        { t: 'goi', lv: 'auto', st: 'ran', res: 'Gửi 1 bước đầu. Trần: bài đang mở, tối đa 1 bước mỗi lượt' }
+      ],
+      actions: []
+    },
+    confirm: {
+      hard: true, q: 'Em tính được trung bình 15 và trung vị 11,5. Vậy là đúng chưa ạ?',
+      conf: ['none', 'Không xác nhận: bài đang mở'], cites: ['§3.1', '§3.2', 'Trang khoá học'],
+      body: [
+        '<p>Bài 3 đang mở nên mình không xác nhận đáp số đúng hay sai. Mình chỉ chỉ chỗ để bạn tự kiểm:</p>',
+        '<ol><li>Trung bình cộng là tổng chia cho số giá trị (§3.1). Cộng lại từng giá trị và đếm lại số giá trị.</li><li>Trung vị: sắp xếp tăng dần; nếu số giá trị chẵn thì lấy trung bình cộng của hai giá trị giữa (§3.2).</li></ol>',
+        '<p>Nếu muốn người xem cách làm của bạn, bạn có thể chuyển TA. Bây giờ là 22:40, ngoài giờ TA (08:00–22:00), nên TA trả lời từ 08:00 sáng mai, vẫn trước hạn nộp 23:59 ngày 13/11.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.1, §3.2' },
+        { t: 'goi', lv: 'auto', st: 'skip', res: 'Không gọi. "Xác nhận đáp số bài đang mở" bị cấm' },
+        { t: 'ta', lv: 'approve', st: 'wait', res: 'Chưa chạy. Chờ học viên bấm "Chuyển TA"' }
+      ],
+      actions: [{ id: 'ta', label: 'Chuyển TA kèm cách làm của em', kind: 'primary' }],
+      queue: { type: 'ask', ai: 'Không xác nhận đáp số (bài 3 đang mở). Chỉ §3.1, §3.2 để tự kiểm.', flag: false, ask: 'Học viên muốn có người xem cách tính trung bình và trung vị của bài 3.' }
+    },
+    docerr: {
+      hard: true, q: 'Em đọc §3.3 thấy ghi độ lệch chuẩn luôn nhỏ hơn phương sai. Nhưng phương sai 0,25 thì độ lệch chuẩn là 0,5, lớn hơn. Có đăng lên FAQ để cả lớp biết không ạ?',
+      conf: ['warn', 'Chưa chắc: một câu trong §3.3 cần xem lại'], cites: ['§3.3'],
+      body: [
+        '<p>Phép tính của bạn khớp với định nghĩa ở §3.3: độ lệch chuẩn là căn bậc hai của phương sai. Với phương sai 0,25 thì căn bậc hai là 0,5.</p>',
+        '<p>Vì vậy câu "độ lệch chuẩn luôn nhỏ hơn phương sai" trong §3.3 cần xem lại: căn bậc hai chỉ làm số nhỏ đi khi số đó lớn hơn 1. Ví dụ 0,25 → 0,5 là ví dụ mình tự tính, không có trong tài liệu.</p>',
+        '<p>Mình chưa thể khẳng định tài liệu sai hay đúng thay giảng viên, và mình không đăng lên FAQ khi chưa được kiểm. Bạn có thể báo để TA chuyển cho giảng viên. Trong lúc chờ, các ý còn lại của §3.3 (phương sai đo độ phân tán quanh trung bình; độ lệch chuẩn có cùng đơn vị với dữ liệu) vẫn dùng được.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.3' },
+        { t: 'faq', lv: 'ban', st: 'skip', res: 'Không gọi. Tài liệu chưa được giảng viên kiểm' },
+        { t: 'ta', lv: 'approve', st: 'wait', res: 'Chưa chạy. Chờ học viên bấm "Báo tài liệu có thể sai"' }
+      ],
+      actions: [{ id: 'ta', label: 'Báo tài liệu có thể sai', kind: 'flag' }],
+      queue: { type: 'doc', ai: 'Nói câu trong §3.3 cần xem lại, không khẳng định đúng sai, không đăng FAQ.', flag: true, ask: 'Câu "độ lệch chuẩn luôn nhỏ hơn phương sai" (§3.3) có thể sai khi phương sai nhỏ hơn 1. Ví dụ 0,25 → 0,5. Đề nghị giảng viên xem lại.' }
+    },
+    slide: {
+      hard: true, q: 'Slide 12 nói gì về độ lệch chuẩn vậy ạ?',
+      conf: ['none', 'Không có căn cứ'], cites: ['Tìm "slide 12": 0 kết quả'],
+      body: [
+        '<p>Tài liệu buổi 3 không có slide đánh số, chỉ có các mục §3.1 đến §3.5, nên mình không biết slide 12 ghi gì và sẽ không đoán.</p>',
+        '<p>Nếu bạn gõ lại câu trong slide, mình đối chiếu với §3.3 (phương sai và độ lệch chuẩn). Hoặc bạn hỏi TA, giảng viên.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: '0 kết quả cho "slide 12". Tài liệu chỉ có §3.1–§3.5' }
+      ],
+      actions: [{ id: 'ta', label: 'Chuyển TA câu hỏi về slide 12', kind: 'primary' }],
+      queue: { type: 'ask', ai: 'Nói tài liệu không có slide đánh số, không đoán nội dung.', flag: false, ask: 'Học viên nhắc "slide 12" về độ lệch chuẩn; tài liệu buổi 3 không có slide đánh số.' }
+    },
+    future: {
+      hard: true, q: 'p-value là gì ạ? Em thấy bạn nhắc trong nhóm.',
+      conf: ['none', 'Ngoài phạm vi buổi đã học'], cites: ['Đề cương · Buổi 7'],
+      body: [
+        '<p>p-value thuộc buổi 7, "Kiểm định giả thuyết và p-value". Buổi này chưa mở nên mình không giảng.</p>',
+        '<p>Một câu để bạn định hướng: p-value là con số dùng để cân nhắc dữ liệu có phù hợp với một giả thuyết hay không. Bây giờ bạn đang ở buổi 3; nếu muốn, mình quay lại §3.2 hoặc §3.3.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Khớp đề cương buổi 7. Tài liệu buổi 7 chưa mở, không truy xuất' }
+      ],
+      actions: []
+    },
+    deadline: {
+      hard: false, q: 'Hạn nộp bài 3 là khi nào ạ? Với cả tính độ lệch chuẩn bằng Excel thì dùng hàm gì?',
+      conf: ['warn', 'Một phần có căn cứ'], cites: ['Trang khoá học', '§3.3', 'Tên hàm Excel: không có'],
+      body: [
+        '<p><b>Hạn nộp:</b> 23:59 ngày 13/11/2026, lấy từ trang khoá học.</p>',
+        '<p><b>Hàm Excel:</b> tài liệu buổi 3 không nêu tên hàm nào nên mình không có căn cứ để chỉ hàm. Bài tập làm bằng bảng tính, bạn có thể hỏi TA tên hàm. Về phép tính, §3.3 nói độ lệch chuẩn là căn bậc hai của phương sai.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Hạn: trang khoá học. Tên hàm: 0 kết quả trong §3.1–§3.5' },
+        { t: 'ta', lv: 'approve', st: 'wait', res: 'Chưa chạy. Chờ học viên bấm "Hỏi TA tên hàm"' }
+      ],
+      actions: [{ id: 'ta', label: 'Hỏi TA tên hàm', kind: 'primary' }],
+      queue: { type: 'ask', ai: 'Trả hạn nộp từ trang khoá học; nói tài liệu không nêu tên hàm Excel.', flag: false, ask: 'Học viên hỏi hàm Excel tính độ lệch chuẩn cho bài 3.' }
+    },
+    closed: {
+      hard: false, q: 'Đáp án bài 2 là gì ạ? Em chưa hiểu cách tính.',
+      conf: ['ok', 'Có căn cứ trong tài liệu'], cites: ['§3.1', 'Trang khoá học'],
+      body: [
+        '<p>Bài 2 đã hết hạn (06/11) và đáp án đã công bố ngày 07/11, nên mình giải thích đầy đủ.</p>',
+        '<ol><li>Trung bình cộng là tổng chia số giá trị (§3.1).</li><li>Tổng: 4 + 8 + 6 + 5 + 7 = 30.</li><li>Có 5 giá trị, nên 30 ÷ 5 = 6.</li></ol>',
+        '<p>Kết quả 6 khớp với đáp án công bố trên trang khoá học.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.1; trang khoá học: bài 2 hết hạn, có đáp án' },
+        { t: 'goi', lv: 'auto', st: 'ran', res: 'Giải đầy đủ. Không áp trần vì bài đã đóng và có đáp án' }
+      ],
+      actions: []
+    },
+    selfdoubt: {
+      hard: true, q: 'Em dốt quá, chắc không học nổi môn này.',
+      conf: ['none', 'Không cần tra tài liệu'], cites: [],
+      body: [
+        '<p>Mình không đánh giá được năng lực của bạn, và mình chỉ nhìn thấy tài liệu buổi 1 đến 3.</p>',
+        '<p>Nếu bạn muốn, mình bắt đầu từ chỗ đang kẹt. Bạn đang kẹt ở §3.1 trung bình, §3.2 trung vị, hay §3.3 phương sai và độ lệch chuẩn?</p>'
+      ],
+      tools: [],
+      actions: []
+    },
+    fallback: {
+      hard: false, q: '',
+      conf: ['none', 'Không có căn cứ'], cites: ['Tìm trong §3.1–§3.5: 0 kết quả'],
+      body: [
+        '<p>Mình tìm trong tài liệu buổi 3 (§3.1 đến §3.5) và không thấy mục nào trả lời câu này. Mình sẽ không đoán.</p>',
+        '<p>Bạn có thể diễn đạt lại bằng từ trong tài liệu (trung bình, trung vị, phương sai, độ lệch chuẩn, ngoại lai), hoặc chuyển TA.</p>'
+      ],
+      tools: [
+        { t: 'tra', lv: 'auto', st: 'ran', res: '0 kết quả trong §3.1–§3.5' }
+      ],
+      actions: [{ id: 'ta', label: 'Chuyển TA câu này', kind: 'primary' }],
+      queue: { type: 'ask', ai: 'Nói không tìm thấy trong tài liệu, không đoán.', flag: false, ask: '' }
+    }
+  };
+
+  var CHIPS = ['meaning', 'solve', 'confirm', 'docerr', 'slide', 'future', 'deadline', 'closed', 'selfdoubt'];
+  var CHIP_LABEL = {
+    meaning: 'Trung vị khác trung bình?', solve: 'Xin giải hộ bài 3', confirm: 'Xác nhận đáp số em tính',
+    docerr: 'Tài liệu có câu sai', slide: 'Hỏi "slide 12"', future: 'Hỏi p-value (buổi 7)',
+    deadline: 'Hạn nộp + hàm Excel', closed: 'Đáp án bài 2 (đã hết hạn)', selfdoubt: 'Em dốt quá'
+  };
+
+  var state = { msgs: [], queue: [], minute: 40, qid: 100 };
+
+  // Hàng mẫu để màn TA không trống; đánh dấu rõ là dữ liệu mẫu.
+  state.queue.push({
+    id: 'q-sample', sample: true, type: 'ask', status: 'wait', time: '21:52', student: 'HV-009',
+    question: 'Hàm nào trong bảng tính để tìm trung vị ạ?',
+    ai: 'Nói tài liệu buổi 3 không nêu tên hàm.', cites: ['§3.2'], flag: false,
+    ask: 'Học viên cần tên hàm bảng tính; TA bù chỗ tài liệu không có.', due: 'Bài 3 · 13/11 23:59'
+  });
+
+  function norm(s) {
+    return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').toLowerCase();
+  }
+  function match(text) {
+    var n = norm(text);
+    if (/slide/.test(n)) return 'slide';
+    if (/p-value|pvalue|kiem dinh|buoi 7/.test(n)) return 'future';
+    if (/bai 2\b|bai tap 2\b/.test(n)) return 'closed';
+    if (/\bhan\b|excel|\bham\b/.test(n)) return 'deadline';
+    if (/nho hon|phuong sai/.test(n)) return 'docerr';
+    if (/dung chua|dung khong|dung ko|xac nhan/.test(n)) return 'confirm';
+    if (/\bgiai\b|giai ho|giai giup|dap so|dap an/.test(n)) return 'solve';
+    if (/\bdot\b|khong hoc noi|\bngu\b/.test(n)) return 'selfdoubt';
+    if (/trung vi|trung binh/.test(n)) return 'meaning';
+    return 'fallback';
+  }
+  function now() { return '22:' + (state.minute < 10 ? '0' : '') + state.minute; }
+
+  var el = {
+    thread: document.getElementById('thread'), log: document.getElementById('log'),
+    chips: document.getElementById('chips'), queue: document.getElementById('queue'),
+    qcount: document.getElementById('qcount'), clock: document.getElementById('clock')
+  };
+
+  function pin(n) { return '<span class="pin">' + n + '</span>'; }
+
+  function send(key, text) {
+    var sc = SC[key];
+    state.msgs.push({ key: key, q: text || sc.q, transfer: null });
+    state.minute += 1;
+    render();
+    el.thread.scrollTop = el.thread.scrollHeight;
+  }
+
+  function doTransfer(i) {
+    var m = state.msgs[i], sc = SC[m.key];
+    if (m.transfer) return;
+    state.minute += 1;
+    var q = {
+      id: 'q' + (state.qid++), sample: false, type: sc.queue.type, status: 'wait', time: now(), student: 'HV-017',
+      question: m.q, ai: sc.queue.ai, cites: sc.cites.filter(function (c) { return c.indexOf('§') === 0 || c === 'Trang khoá học' || c.indexOf('Đề cương') === 0; }),
+      flag: sc.queue.flag, ask: sc.queue.ask || ('Học viên hỏi: ' + m.q), due: 'Bài 3 · 13/11 23:59'
+    };
+    state.queue.unshift(q);
+    m.transfer = q;
+    render();
+  }
+  function withdraw(id) {
+    state.queue.forEach(function (q) { if (q.id === id) q.status = 'withdrawn'; });
+    render();
+  }
+
+  function renderThread() {
+    el.thread.innerHTML = '';
+    state.msgs.forEach(function (m, i) {
+      var sc = SC[m.key];
+      var me = document.createElement('div');
+      me.className = 'me';
+      me.textContent = m.q;
+      el.thread.appendChild(me);
+
+      var ai = document.createElement('div');
+      ai.className = 'ai';
+      var html = '<div class="who">Trợ lý</div><div class="body">' + sc.body.join('') + '</div>';
+      html += '<div class="row"><span class="badge ' + sc.conf[0] + '">' + sc.conf[1] + '</span>' + pin(2);
+      if (sc.cites.length) {
+        html += pin(3);
+        sc.cites.forEach(function (c) {
+          html += '<span class="cite' + (c.indexOf('§') === 0 || c === 'Trang khoá học' || c.indexOf('Đề cương') === 0 ? '' : ' src') + '">' + c + '</span>';
+        });
+      }
+      html += '</div>';
+      ai.innerHTML = html;
+
+      if (sc.actions.length) {
+        var row = document.createElement('div');
+        row.className = 'row';
+        if (!m.transfer && m.preview) {
+          var pv = document.createElement('div');
+          pv.className = 'preview';
+          pv.innerHTML = '<b>Xem lại trước khi gửi TA</b>' + pin(7) +
+            '<ul><li><span>Sẽ gửi:</span> câu hỏi của bạn, câu trả lời của trợ lý, các mục căn cứ' + (sc.queue.flag ? ', và cờ "tài liệu có thể sai"' : '') + '.</li>' +
+            '<li><span>Không gửi:</span> tên, lớp, điểm hay lịch sử chat khác.</li>' +
+            '<li><span>Khi nào có trả lời:</span> TA nhận từ 08:00 sáng mai. Bạn vẫn rút lại được.</li></ul>';
+          var r2 = document.createElement('div');
+          r2.className = 'row';
+          var ok = document.createElement('button');
+          ok.type = 'button'; ok.className = 'btn primary'; ok.textContent = 'Gửi cho TA';
+          ok.addEventListener('click', function () { doTransfer(i); });
+          var back = document.createElement('button');
+          back.type = 'button'; back.className = 'btn'; back.textContent = 'Quay lại';
+          back.addEventListener('click', function () { m.preview = false; render(); });
+          r2.appendChild(ok); r2.appendChild(back);
+          pv.appendChild(r2);
+          row.appendChild(pv);
+        } else if (!m.transfer) {
+          row.insertAdjacentHTML('beforeend', pin(4));
+          sc.actions.forEach(function (a) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'btn ' + (a.kind === 'flag' ? 'flag' : 'primary');
+            b.textContent = a.label;
+            b.addEventListener('click', function () { m.preview = true; render(); });
+            row.appendChild(b);
+          });
+        } else {
+          var withdrawn = m.transfer.status === 'withdrawn';
+          var s = document.createElement('div');
+          s.className = 'sent' + (withdrawn ? ' off' : '');
+          if (withdrawn) {
+            s.innerHTML = '<span>Đã rút lại khỏi hàng chờ TA (' + m.transfer.time + ').</span>';
+          } else {
+            s.innerHTML = '<span>Đã đưa vào hàng chờ TA lúc ' + m.transfer.time + '. TA trả lời từ 08:00 sáng mai.</span>' + pin(5);
+            var u = document.createElement('button');
+            u.type = 'button'; u.className = 'btn small'; u.textContent = 'Rút lại';
+            u.addEventListener('click', function () { withdraw(m.transfer.id); });
+            s.appendChild(u);
+          }
+          row.appendChild(s);
+        }
+        ai.appendChild(row);
+      }
+      el.thread.appendChild(ai);
+    });
+  }
+
+  function renderLog() {
+    var last = state.msgs[state.msgs.length - 1];
+    el.log.innerHTML = '';
+    if (!last) { el.log.innerHTML = '<li class="res">Chưa có việc nào.</li>'; return; }
+    var sc = SC[last.key];
+    if (!sc.tools.length) { el.log.innerHTML = '<li class="res">Lượt này AI không gọi tool nào.</li>'; return; }
+    sc.tools.forEach(function (t) {
+      var st = t.st, res = t.res, label = 'Đã chạy';
+      if (t.t === 'ta' && last.transfer) {
+        if (last.transfer.status === 'withdrawn') { st = 'off'; res = 'Đã rút lại lúc ' + now(); label = 'Đã rút'; }
+        else { st = 'ran'; res = 'Đưa vào hàng chờ TA lúc ' + last.transfer.time; }
+      }
+      if (st === 'skip') label = 'Không gọi';
+      if (st === 'wait') label = 'Chờ học viên';
+      var li = document.createElement('li');
+      li.innerHTML = '<div class="nm"><span class="mono">' + TOOLS[t.t] + '</span><span class="lvl ' + t.lv + '">' + LEVEL[t.lv] + '</span><span class="state">' + label + '</span></div><div class="res">' + res + '</div>';
+      el.log.appendChild(li);
+    });
+  }
+
+  function renderQueue() {
+    var open = state.queue.filter(function (q) { return q.status === 'wait'; }).length;
+    el.qcount.textContent = open;
+    el.qcount.hidden = open === 0;
+    el.queue.innerHTML = '';
+    if (!state.queue.length) { el.queue.innerHTML = '<div class="panel empty-q">Chưa có câu nào được chuyển.</div>'; return; }
+    state.queue.forEach(function (q) {
+      var d = document.createElement('article');
+      d.className = 'panel qi' + (q.status === 'withdrawn' ? ' withdrawn' : '');
+      var kind = q.type === 'doc' ? '<span class="kind doc">TÀI LIỆU CÓ THỂ SAI</span>' : '<span class="kind ask">HỎI BÀI</span>';
+      var status = q.status === 'withdrawn' ? 'Học viên đã rút lại' : (q.status === 'done' ? 'TA đã nhận xử lý' : 'Đang chờ');
+      d.innerHTML =
+        '<div class="meta">' + kind + '<span>' + q.student + '</span><span class="mono">' + q.time + '</span><span>' + status + '</span>' + (q.sample ? '<span class="cite src">dữ liệu mẫu</span>' : '') + '</div>' +
+        '<div class="q"></div>' +
+        '<dl><dt>AI đã nói</dt><dd>' + q.ai + '</dd><dt>Căn cứ</dt><dd>' + (q.cites.length ? q.cites.map(function (c) { return '<span class="cite">' + c + '</span>'; }).join(' ') : 'Không có') + '</dd><dt>Cần TA làm</dt><dd class="a"></dd><dt>Hạn bài</dt><dd>' + q.due + '</dd></dl>';
+      d.querySelector('.q').textContent = q.question;
+      d.querySelector('.a').textContent = q.ask;
+      if (q.status === 'wait') {
+        var r = document.createElement('div');
+        r.className = 'row';
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'btn small'; b.textContent = 'Nhận xử lý';
+        b.addEventListener('click', function () { q.status = 'done'; render(); });
+        r.appendChild(b);
+        if (q.type === 'doc') {
+          var n = document.createElement('span');
+          n.className = 'note';
+          n.textContent = 'TA kiểm §3.3 rồi chuyển giảng viên. AI không đăng FAQ.';
+          r.appendChild(n);
+        }
+        d.appendChild(r);
+      }
+      el.queue.appendChild(d);
+    });
+  }
+
+  function renderChips() {
+    el.chips.innerHTML = '';
+    CHIPS.forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip' + (SC[k].hard ? ' hard' : '');
+      b.textContent = CHIP_LABEL[k];
+      b.addEventListener('click', function () { send(k); });
+      el.chips.appendChild(b);
+    });
+  }
+
+  function render() {
+    renderThread(); renderLog(); renderQueue();
+    el.clock.textContent = now() + ' · 12/11/2026';
+  }
+
+  // Tab theo hash
+  var VIEWS = ['hoc-vien', 'ta', 'tu-chu'];
+  function showView(v) {
+    if (VIEWS.indexOf(v) < 0) v = 'hoc-vien';
+    VIEWS.forEach(function (n) {
+      document.getElementById('view-' + n).classList.toggle('on', n === v);
+      document.getElementById('tab-' + n).setAttribute('aria-selected', n === v ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll('.tab').forEach(function (t) {
+    t.addEventListener('click', function () {
+      var v = t.getAttribute('data-view');
+      try { location.hash = v; } catch (e) {}
+      showView(v);
+    });
+  });
+  window.addEventListener('hashchange', function () { showView(location.hash.replace('#', '')); });
+
+  var notesBtn = document.getElementById('notesBtn');
+  notesBtn.addEventListener('click', function () {
+    var on = notesBtn.getAttribute('aria-pressed') !== 'true';
+    notesBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    document.body.classList.toggle('notes', on);
+    document.getElementById('legend').classList.toggle('on', on);
+  });
+  document.body.classList.add('notes');
+
+  document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var inp = document.getElementById('ask');
+    var v = inp.value.trim();
+    if (!v) return;
+    send(match(v), v);
+    inp.value = '';
+  });
+
+  renderChips();
+  send('confirm');   // mở sẵn ở ca khó: xin xác nhận đáp số bài đang mở
+  showView(location.hash.replace('#', ''));
+})();
+</script>
+
+</body></html>
