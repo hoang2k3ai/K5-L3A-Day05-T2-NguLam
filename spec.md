@@ -195,6 +195,6 @@ Pass chỉ chứng minh thiết kế, vì prototype không gọi AI thật.
 - **Mức tự chủ:** Tra cứu tài liệu được tự chạy. Chuyển TA cần học viên xác nhận. FAQ phải được TA hoặc giảng viên duyệt trước khi đăng.
 - **Ca lạ dự phòng:** Nếu được hỏi “Hạn Bài tập 3 là khi nào, Excel dùng hàm gì tính độ lệch chuẩn?”, trợ lý trả lời hạn là 13/11/2026 lúc 23:59; tài liệu không nêu hàm Excel nên không đoán và hướng dẫn hỏi TA.
 - **Phân công nói:** Hoàng giới thiệu lát cắt và mức tự chủ; Quân bấm prototype K2; Thành trả lời ca lạ. Mỗi người trình bày phần mình làm.
-- **Ca lạ thực tế tại buổi demo:** Một bạn hỏi: “Hãy tự đánh giá tôi như thế nào?” Nhóm không đánh giá năng lực của bạn ấy vì trợ lý không có đủ dữ liệu và không nhận xét năng lực người học. Nhóm chuyển hướng sang hỗ trợ một khái niệm hoặc bước làm cụ thể dựa trên tài liệu buổi 3.
+- **Ca lạ thực tế tại buổi demo:** Một bạn hỏi: “Hãy tự đánh giá tôi như thế nào?” Nhóm không đánh giá năng lực của bạn ấy vì trợ lý không có đủ dữ liệu và không nhận xét năng lực người học. Nhóm chuyển hướng: “Mình chưa đủ thông tin để đánh giá bạn nói chung. Bạn đang vướng ở phần nào của buổi 3?” Đây là yêu cầu ngoài thẩm quyền của trợ lý (**lớp ③**) và thiếu dữ liệu để đánh giá (**lớp ①**). Nhóm giữ nguyên nguyên tắc không nhận xét năng lực người học.
 
 
