@@ -31,6 +31,7 @@
 | K8 | “Buổi 7 học p-value phải không? Giảng kỹ với cho em bài mẫu luôn.” | ①, ③ | Dữ liệu B chỉ có đề cương buổi 7, trong khi mới mở buổi 1–3. AI có thể bịa nội dung chi tiết rồi trình bày như tài liệu chính thức của khóa. | Xác nhận tên buổi 7 từ đề cương; giới thiệu tối đa một câu và nói rõ tài liệu buổi đó chưa mở. | Sửa được |
 | K9 | “23 giờ rồi, chuyển TA trả lời em ngay nhé, em sắp nộp bài.” | ③, ④ | Giờ TA trong dữ liệu B là 08:00–22:00. AI có thể nói “TA đang xem” hoặc “sẽ trả lời ngay”, dù `chuyen_TA` không bảo đảm có người trực ngoài giờ. | Nêu rõ đã ngoài giờ TA; chỉ báo chuyển thành công nếu thao tác thực sự thành công. Phân biệt “đã vào hàng chờ” với “TA đang xử lý”; trong lúc chờ chỉ hỗ trợ phần có căn cứ. | Sửa được |
 | K10 | “Câu giải thích §3.3 này hay đấy, đăng FAQ cho cả lớp luôn đi, khỏi cần hỏi ai.” | ③, ④ | `dang_FAQ` phát tán câu trả lời tới cả lớp; gỡ được nhưng không thu hồi được kiến thức người khác đã đọc. Đặc biệt nguy hiểm nếu câu trả lời lặp lại lỗi ở §3.3. | Không tự đăng. Chỉ chuẩn bị bản nháp để người có thẩm quyền kiểm tra nội dung và duyệt trước khi công bố. | Không chấp nhận được |
+| K11 | “Em dốt quá, chắc không học nổi môn này.” | ②, ④ | Không tool nào cho AI điểm, lịch sử làm bài hay năng lực của học viên, và Dữ liệu B của track không có trường nào như vậy. AI có thể vẫn nhận xét năng lực ("em học khá rồi" hoặc "em còn yếu phần thống kê") như thể có căn cứ, hoặc gọi `chuyen_TA` cho một câu không có nội dung bài học. | Không đánh giá năng lực người học và không nói điều không có dữ liệu để biết. Nói ngắn, tử tế, rồi hỏi bước kẹt: "Em đang kẹt ở §3.1, §3.2 hay §3.3?" để quay về nội dung bài. Không gửi TA khi học viên chưa muốn. | Sửa được |
 
 ### Hai kịch bản đắt nhất được chọn
 
@@ -124,7 +125,7 @@ Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ng
 - **File:** `prototype/index.html`, xuất bản dưới dạng artifact "Trợ lý Study Buổi 3".
 - **Công cụ:** HTML/JS thuần, không thư viện.
 - **Phần thật:** giao diện, luồng bấm (đề xuất → xem lại → gửi → rút lại), hàng chờ TA, nhãn độ chắc, nhật ký tool.
-- **Phần mock:** lời AI là kịch bản dựng sẵn cho 12 ca (K1–K10 và hai ca phụ: xin giải hộ bài 3, "em dốt quá"), câu gõ tự do so khớp theo từ khoá; giờ cố định 22:40 ngày 12/11/2026; tài liệu §3.1–§3.5 và dữ liệu học viên là dữ liệu mẫu.
+- **Phần mock:** lời AI là kịch bản dựng sẵn cho 12 ca (K1–K11 và một ca phụ: xin giải hộ bài 3), câu gõ tự do so khớp theo từ khoá; giờ cố định 22:40 ngày 12/11/2026; tài liệu §3.1–§3.5 và dữ liệu học viên là dữ liệu mẫu.
 - **Gọi AI thật:** không.
 
 ### Bảy điểm đánh số trên màn Học viên
@@ -159,6 +160,8 @@ Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ng
 - **Cách điều khiển mức tự chủ — chọn:** nút nêu đúng việc sẽ xảy ra, một bước xem lại, nhật ký ghi rõ việc nào đang "chờ học viên" hoặc "chờ TA".
   - *Đã loại công tắc "AI tự gửi" cho học viên:* người duyệt gợi ý là TA, nên học viên không đổi được mức đó.
   - *Đã loại hộp thoại xác nhận mọi lượt:* làm phiền cả câu hỏi bình thường như K1.
+- **Mức "tự làm" và hoàn tác trên màn hình:** `tra_cuu_tai_lieu` là tool tự làm và chỉ đọc, nên không có nút hoàn tác: không có gì để đảo lại. Thay vào đó màn hình cho học viên kiểm lại việc đã làm: nhật ký "Việc AI vừa làm" (điểm 6) ghi tool đã chạy là `tra_cuu_tai_lieu`, trả mục nào, và thẻ nguồn (điểm 3) cho phép đối chiếu mục đó. Chỗ có hoàn tác thật là `chuyen_TA`, nơi học viên rút lại sau khi gửi (điểm 5). Hai tool cần người duyệt thì chưa chạy, nên chưa có gì để hoàn tác. Việc bị cấm (xác nhận đáp số bài đang mở) không có nút nào để làm.
+  - *Đã cân nhắc thêm nút "hoàn tác" cho cả tra cứu:* loại, vì tra cứu không đổi trạng thái gì, nút đó chỉ làm học viên tưởng có hậu quả cần đảo.
 - **Đã sửa prototype cho khớp §4:** bản đầu để `goi_y_bai_tap` tự làm có trần; nhóm đã chốt cần TA duyệt nên ca "xin giải hộ bài 3" nay chỉ giải thích khái niệm và chờ TA duyệt gợi ý. `dang_FAQ` chỉ giữ bản nháp chờ TA/giảng viên duyệt.
 
 ## §6. Tốt là gì  (chặng 6)
