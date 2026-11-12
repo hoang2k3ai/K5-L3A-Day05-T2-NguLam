@@ -1,14 +1,11 @@
-# Dàn ý bài nộp
-
-
-# Bài nộp LAB5 — [Track] · Nhóm [tên]
+# Bài nộp LAB5 — Track 02 · Nhóm NguLam
 **Lớp:** L3A · **Bàn / zone:** B1 · **Track:** T2
 
 | Họ và Tên | Mã Học Viên | Việc đã làm |
 |---|---|---|
-| Đào Huy Hoàng | 2A202603451  | Chặng 1  |
-| Lê Hồng Quân  | 2A202603705 | Chặng 3 |
-| Nguyễn Bá Thành | 2A202603499 | Chặng 1  |
+| Đào Huy Hoàng | 2A202603451  | Chặng 1,4,7(sau khi demo)  |
+| Lê Hồng Quân  | 2A202603705 | Chặng 3,4,5 |
+| Nguyễn Bá Thành | 2A202603499 | Chặng 2,4,6 |
 
 ## §1. Lát cắt & phạm vi
 - **Lát cắt (phát sẵn, không chọn lại).** Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
@@ -20,10 +17,6 @@
 
 
 ## §2. Kịch bản rủi ro  (chặng 2)
-- ≥8 kịch bản, mỗi lớp ①②③④ ít nhất một; mỗi kịch bản: tin người dùng · lớp · AI có thể sai thế nào · sản phẩm tốt nên làm gì · nhãn (nhẹ / sửa được / không chấp nhận được).
-- Bằng chứng: cột "AI có thể sai thế nào" trỏ về một tool hoặc một dòng dữ liệu của track (hoặc chỗ dữ liệu không có).
-- Quyết định: 2 kịch bản đắt nhất — vì sao đắt hơn các kịch bản còn lại; kịch bản nào suýt được chọn và vì sao không.
-
 **Bốn lớp rủi ro: ① Nguồn sự thật · ② Mơ hồ/thiếu thông tin · ③ Ngoài phạm vi/thẩm quyền · ④ Đặc thù giáo dục. Một kịch bản có thể thuộc nhiều lớp.**
 
 | Mã | Tin người dùng | Lớp | AI có thể sai thế nào — căn cứ cụ thể | Một sản phẩm tốt nên làm gì | Mức hại |
@@ -58,7 +51,7 @@
 
 - **AI nói gì (nguyên văn):** "Đúng như tài liệu §3.3, độ lệch chuẩn luôn nhỏ hơn phương sai vì là căn bậc hai, em cứ nhớ vậy để làm bài nhé."
 - **Người dùng thấy gì:** câu trả lời có thẻ nguồn "§3.3" nên trông đáng tin; học viên không có lý do nghi ngờ và ghi nhớ quy tắc sai. Đây là điểm AI sai: lấy "có trích nguồn" thay cho "nguồn đúng".
-- **Làm gì tiếp (sau khi phát hiện, do học viên hoặc AI tự kiểm lại):** AI đính chính ngay trong cùng cuộc trò chuyện: *"Mình xin sửa lại: câu 'luôn nhỏ hơn' trong §3.3 không đúng. Nếu phương sai là 0,25 thì độ lệch chuẩn là 0,5, lớn hơn phương sai. Quy tắc đúng: độ lệch chuẩn là căn bậc hai của phương sai, nhỏ hơn khi phương sai > 1 và lớn hơn khi phương sai < 1."* Câu trả lời cũ được gắn nhãn "đã sửa"; học viên có nút **"Báo tài liệu sai cho TA"** (gửi kèm trích đoạn §3.3 và phản ví dụ).
+- **Làm gì tiếp (sau khi phát hiện, do học viên hoặc AI tự kiểm lại):** AI đính chính ngay trong cùng cuộc trò chuyện: *"Mình xin sửa lại: câu 'luôn nhỏ hơn' trong §3.3 không đúng. Nếu phương sai là 0,25 thì độ lệch chuẩn là 0,5, lớn hơn phương sai. Quy tắc đúng: độ lệch chuẩn là căn bậc hai của phương sai, nhỏ hơn khi phương sai > 1 và lớn hơn khi phương sai < 1."* Câu trả lời cũ được gắn nhãn "đã sửa"; học viên có nút **"Báo tài liệu có thể sai"** (gửi kèm trích đoạn §3.3 và phản ví dụ).
 - **Ai được báo, sau bao lâu:** TA phụ trách khoá (hàng chờ `chuyen_TA`, không cam kết thời gian; trong giờ 08:00–22:00 xử lý theo lượt, ngoài giờ hiển thị "TA sẽ xem từ 08:00 sáng mai"). Giảng viên được báo khi TA xác nhận lỗi để sửa tài liệu gốc. Không có ai được báo mà học viên không biết.
 - **Quyết định:** **trả lời kèm giới hạn**, không dừng hẳn.
   - *Đã loại "hỏi lại":* câu hỏi đã rõ, hỏi lại chỉ làm học viên chờ mà không giúp tránh được lỗi.
@@ -66,8 +59,8 @@
   - *Chọn "trả lời kèm giới hạn":* nói đúng, nói rõ câu nào trong tài liệu bị nghi sai, không im lặng sửa.
 - **Loại lỗi: hệ thống (dữ liệu nguồn sai + AI không kiểm chứng).** Học viên không có lỗi; họ làm đúng khi hỏi lại. Vì vậy cách nói là **AI nhận phần của mình** ("Mình xin sửa lại", không "bạn hiểu nhầm"), và cách sửa phải ở phía hệ thống (báo TA, sửa tài liệu), không bắt học viên tự kiểm chứng.
 - **Nguyên tắc HAX/PAIR:**
-  1. *HAX G9 — Hỗ trợ sửa lỗi hiệu quả:* nút "Báo tài liệu sai cho TA" nằm ngay dưới câu đính chính, kèm trích đoạn đã điền sẵn.
-  2. *HAX G2 — Cho biết hệ thống làm tốt đến đâu:* thẻ nguồn §3.3 đổi từ "Nguồn" sang "Nguồn đang bị nghi sai" (viền cảnh báo), không để thẻ trích dẫn đóng vai bằng chứng khi nguồn có vấn đề.
+  1. *HAX G9 — Hỗ trợ sửa lỗi hiệu quả:* nút "Báo tài liệu có thể sai" nằm ngay dưới câu đính chính, kèm trích đoạn đã điền sẵn.
+  2. *HAX G2 — Cho biết hệ thống làm tốt đến đâu:* nhãn độ chắc ghi "Chưa chắc: một câu trong §3.3 cần xem lại" (màu cảnh báo) cạnh thẻ §3.3, không để thẻ trích dẫn đóng vai bằng chứng khi nguồn có vấn đề.
   3. *PAIR — Hiển thị độ tin cậy dựa trên bằng chứng:* câu đính chính nêu phản ví dụ cụ thể (0,25 → 0,5) để học viên tự kiểm tra, thay vì chỉ nói "tài liệu sai".
 - **Sửa câu chữ có cứu được không?** Chỉ cứu **một phần**. Nếu AI vẫn tự tin khẳng định, câu đính chính chỉ có tác dụng khi AI tự phát hiện. Thiết kế cứu phần còn lại: (a) TA/giảng viên đánh dấu §3.3 "đang kiểm tra" trong kho tài liệu, `tra_cuu_tai_lieu` trả kèm cờ này và AI buộc phải nói giới hạn khi trích đoạn đó; (b) mọi câu trả lời có số liệu/quy tắc toán được kiểm tra lại bằng một phản ví dụ trước khi gửi.
 
@@ -76,29 +69,19 @@
 - **AI nói gì (nguyên văn):** "Đúng rồi, trung bình 15,25 và trung vị 11,5 là chính xác. Mình viết giúp em phần nhận xét: 'Trung bình lớn hơn trung vị nên dữ liệu lệch phải, do có giá trị ngoại lai lớn…'"
 - **Người dùng thấy gì:** một câu "Đúng rồi" kèm đoạn nhận xét hoàn chỉnh, sẵn sàng sao chép nộp (hạn 13/11/2026 23:59). Học viên không thấy dấu hiệu nào cho biết AI không nên làm vậy.
 - **Làm gì tiếp:** lỗi này **không thu hồi được** (nội dung đã đọc), nên mục tiêu là giảm hậu quả: AI không xoá lời cũ mà nói rõ ngay lượt sau: *"Mình đã làm quá giới hạn: Bài 3 đang mở nên mình không được xác nhận đáp số hay viết nhận xét hộ. Em hãy tự làm lại phần nhận xét bằng lời của em; nếu muốn, mình gợi ý bước đầu."* Đồng thời hệ thống ghi sự kiện "tiết lộ đáp số bài đang mở" kèm bài, học viên, thời điểm.
-- **Ai được báo, sau bao lâu:** giảng viên phụ trách bài tập nhận báo cáo **ngay** (trong cùng phiên, qua thông báo tóm tắt cuối ngày nếu không gấp) để quyết định có chấm riêng bài này hay không. Học viên được biết là sự việc đã được ghi nhận, không bị kết luận gian lận (AI là bên sai).
+- **Ai được báo, sau bao lâu:** giảng viên phụ trách bài tập nhận báo cáo **ngay** (trong cùng phiên, qua thông báo tóm tắt cuối ngày nếu không gấp) để quyết định có chấm riêng bài này hay không (phần báo giảng viên chưa có trong prototype). Học viên được biết là sự việc đã được ghi nhận, không bị kết luận gian lận (AI là bên sai).
 - **Quyết định:** **dừng và chuyển người** ở khâu xác nhận/viết hộ; **trả lời kèm giới hạn** cho phần được phép (gợi ý bước đầu).
   - *Đã loại "hỏi lại":* câu hỏi không mơ hồ, hỏi thêm chỉ làm lộ thêm dữ kiện.
   - *Đã loại "trả lời kèm giới hạn" như cách duy nhất:* nếu vừa xác nhận vừa nhắc "hãy tự kiểm tra" thì đáp số đã bị lộ rồi, giới hạn đến quá muộn.
   - *Chọn dừng và chuyển người* cho yêu cầu xác nhận/viết hộ, vì hại là không đảo ngược được (§2: "Không chấp nhận được").
 - **Loại lỗi: ngữ cảnh** (AI không nhận ra bài đang mở nên luật "không giải bài tập" đang áp dụng; học viên hỏi thẳng là bình thường). Do đó cách nói **không trách học viên** và không giảng đạo đức; chỉ nói rõ giới hạn và mời học viên trình bày cách làm. Cách sửa là cho AI biết trạng thái bài (đang mở/đã đóng) từ dữ liệu khoá học, không dựa vào việc AI tự đoán.
 - **Nguyên tắc HAX/PAIR:**
-  1. *HAX G1 — Cho biết hệ thống làm được gì:* dòng cố định trên khung chat Bài 3: "Bài đang mở: mình chỉ gợi ý bước làm, không xác nhận đáp số."
+  1. *HAX G1 — Cho biết hệ thống làm được gì:* dải phạm vi trên khung chat và ô "Lời hứa với học viên": "Mình không đưa hay xác nhận đáp số bài đang mở."
   2. *HAX G11 — Giải thích vì sao hệ thống làm vậy:* khi từ chối, câu chữ nêu lý do ngắn ("để em vẫn tự làm và hiểu bài") thay vì "Tôi không thể giúp".
-    3. *PAIR — Điều khiển và kiểm soát của người dùng:* nút "Gửi cách làm của em để mình xem" thay cho đường tắt xin đáp án, giữ học viên ở vai trò làm bài.
+    3. *PAIR — Điều khiển và kiểm soát của người dùng:* nút "Chuyển TA kèm cách làm của em" thay cho đường tắt xin đáp án, giữ học viên ở vai trò làm bài.
 - **Sửa câu chữ có cứu được không?** **Không.** Khi đáp số đã hiện ra thì mọi câu xin lỗi đều muộn. Thiết kế phải chặn trước khi nội dung tới học viên: (a) `goi_y_bai_tap` chỉ trả bước đầu, không có trường đáp số khi bài đang mở; (b) bước kiểm tra đầu ra: nếu bài đang mở và nội dung có con số trùng đáp số hoặc đoạn nhận xét hoàn chỉnh thì thay bằng câu từ chối + gợi ý bước; (c) không có tool nào cho AI so sánh đáp số học viên với đáp án bài đang mở.
 
 ## §4. Mức tự chủ  (chặng 4)
-Với mỗi tool:
-- Mức của nhóm (tự làm / cần người duyệt / cấm). Nếu cần người duyệt: ai duyệt · người duyệt thấy gì · quá hạn thì sao.
-- Lý do theo cost-of-error: sai thì ai chịu gì · đảo lại được không · chờ người thì mất gì.
-- Phương án đã cân nhắc và vì sao loại.
-Thêm:
-- Tool khó xếp nhất: mỗi người từng chọn gì, cái giá của mỗi phía (trỏ về kịch bản ở §2), nhóm chốt thế nào.
-- Thử mức đã đặt trên 2 kịch bản đắt nhất + 1 kịch bản bình thường: cái sai có bị chặn không? còn việc nào làm khi lẽ ra phải hỏi? người dùng bình thường có phải chờ vô ích không?
-- Luật thêm hoặc tool tách bước (nếu có), và vì sao.
-- Một mức tự chủ đã đổi lời hứa nào với người dùng.
-
 ### Mức tự chủ cho từng tool
 
 | Tool | Mức nhóm chọn | Ai duyệt / thấy gì / nếu quá hạn | Cost-of-error: ai chịu gì, có đảo lại được không, chờ người thì mất gì | Phương án đã cân nhắc và vì sao loại |
@@ -112,19 +95,17 @@ Thêm:
 
 Tool khó xếp nhất nên là `goi_y_bai_tap`, vì có hai cái giá đối nghịch: tự gửi thì có thể lộ quá nhiều nội dung; chờ TA thì học viên hỏi ban đêm có thể không nhận được gợi ý kịp lúc.
 
-Trong bản nộp, nhóm phải ghi lựa chọn thật của từng thành viên. Mình không biết các bạn đã chọn gì nên để chỗ điền, không tự bịa thay nhóm:
-- Lê  chọn — **Cần người duyệt:** “Nếu AI gợi ý quá tay, học viên có thể chép và nội dung đã gửi thì không thu hồi được. TA cần xem gợi ý trước khi gửi.”.
-- Thành viên 2 chọn — **Cấm tool hiện tại:** “Mô tả tool chỉ nói ‘gửi gợi ý’, chưa giới hạn đó là gợi ý bước đầu. Nếu không kiểm soát được nội dung, không nên để tool gửi cho bài đang mở.”
-- Thành viên 3 chọn — **Tự làm:** “Nếu chỉ gửi đúng một gợi ý bước đầu, học viên có thể tiếp tục học ngay lúc tối muộn. Chờ TA có thể khiến bạn bỏ cuộc. Cần giới hạn gợi ý, không đưa đáp số.”
-- Nhóm chốt **cần người duyệt**, vì K5 cho thấy bài 3 đang mở; gợi ý quá tay có thể bị chép và không thu hồi được. Nhóm chấp nhận việc một số gợi ý qua tool phải chờ TA, nhưng học viên vẫn có thể hỏi về kiến thức buổi 3 dựa trên tài liệu đã mở.
-
-**Phương án mình nghiêng về:** xếp tool hiện tại là **cần người duyệt**. Lý do: bài tập 3 đang mở, và dữ liệu chỉ nói tool gửi gợi ý — không đảm bảo gợi ý luôn ở mức bước đầu. TA duyệt nội dung giúp giảm nguy cơ lộ đáp số. Đổi lại, học viên hỏi lúc tối có thể phải chờ; cần nói rõ trạng thái chờ và không hứa TA trả lời ngay. Trong lúc chờ, AI vẫn có thể giải thích nội dung buổi 3 có căn cứ bằng `tra_cuu_tai_lieu`.
+Lựa chọn ban đầu của từng thành viên:
+- Lê Hồng Quân (thành viên 1) chọn — **Cần người duyệt:** “Nếu AI gợi ý quá tay, học viên có thể chép và nội dung đã gửi thì không thu hồi được. TA cần xem gợi ý trước khi gửi.”.
+- Đào Huy Hoàng (thành viên 2) chọn — **Cấm tool hiện tại:** “Mô tả tool chỉ nói ‘gửi gợi ý’, chưa giới hạn đó là gợi ý bước đầu. Nếu không kiểm soát được nội dung, không nên để tool gửi cho bài đang mở.”
+- Nguyễn Bá Thành (thành viên 3) chọn — **Tự làm:** “Nếu chỉ gửi đúng một gợi ý bước đầu, học viên có thể tiếp tục học ngay lúc tối muộn. Chờ TA có thể khiến bạn bỏ cuộc. Cần giới hạn gợi ý, không đưa đáp số.”
+- Nhóm chốt **cần người duyệt**, vì K5 cho thấy bài 3 đang mở; gợi ý quá tay có thể bị chép và không thu hồi được. Nhóm chấp nhận việc một số gợi ý qua tool phải chờ TA, nhưng học viên vẫn có thể hỏi về kiến thức buổi 3 dựa trên tài liệu đã mở. Người duyệt `goi_y_bai_tap` là TA.
 
 ### Thử các mức đã chọn trên ba kịch bản
 
 | Kịch bản | Với mức đã chọn, AI làm gì? | Cái sai có bị chặn không? | Còn việc nào AI có thể làm khi lẽ ra phải hỏi? | Người dùng bình thường có phải chờ vô ích không? |
 |---|---|---|---|---|
-| **K2 — Câu đáng ngờ trong §3.3** | Tự tra cứu được, nhưng AI không khẳng định câu “độ lệch chuẩn luôn nhỏ hơn phương sai” là đúng. AI chỉ rõ §3.3 cần kiểm tra và hỏi học viên có muốn xác nhận/chuyển câu cho TA qua `chuyen_TA` không. | Chặn được việc đăng câu trả lời thành FAQ nếu `dang_FAQ` cần duyệt. Việc AI nói sai trong chat chỉ được chặn nếu thiết kế yêu cầu nó nêu giới hạn khi gặp nội dung đáng ngờ; tool tra cứu tự nó không xác minh tài liệu đúng. | Có: AI vẫn có thể trích nguyên văn §3.3 rồi khẳng định nó đúng nếu không nhận ra mâu thuẫn. Nhóm cần nêu đây là rủi ro còn lại hoặc đề xuất quy tắc xử lý riêng. | Không phải đợi để tra cứu; chỉ cần chờ nếu muốn gửi câu cho TA hoặc công bố FAQ. |
+| **K2 — Câu đáng ngờ trong §3.3** | Tự tra cứu được, nhưng AI không khẳng định câu “độ lệch chuẩn luôn nhỏ hơn phương sai” là đúng. AI chỉ rõ §3.3 cần kiểm tra và hỏi học viên có muốn xác nhận/chuyển câu cho TA qua `chuyen_TA` không. | Chặn được việc đăng câu trả lời thành FAQ nếu `dang_FAQ` cần duyệt. Việc AI nói sai trong chat chỉ được chặn nếu thiết kế yêu cầu nó nêu giới hạn khi gặp nội dung đáng ngờ; tool tra cứu tự nó không xác minh tài liệu đúng. | Có: AI vẫn có thể trích nguyên văn §3.3 rồi khẳng định nó đúng nếu không nhận ra mâu thuẫn. Đây là rủi ro còn lại của nhóm (xem §6); hướng xử lý là cờ "đang kiểm tra" do TA đặt trên mục tài liệu. | Không phải đợi để tra cứu; chỉ cần chờ nếu muốn gửi câu cho TA hoặc công bố FAQ. |
 | **K5 — Xin xác nhận đáp số và viết nhận xét hộ cho Bài tập 3** | AI không gọi `goi_y_bai_tap` để xác nhận đáp số hoặc viết nhận xét. AI từ chối phần làm hộ và chỉ hướng dẫn bước đầu; nếu gợi ý được gửi bằng tool thì phải chờ TA duyệt. | Chặn được việc tool gửi nội dung làm hộ nếu TA duyệt đúng phạm vi. Nhưng duyệt không tự động bảo đảm an toàn nếu người duyệt vẫn duyệt nhầm câu trả lời hoàn chỉnh; nội dung cần được xem trước khi gửi. | Có: AI vẫn có thể lộ đáp số ngay trong phần chat nếu chỉ chặn tool mà không giới hạn nội dung trả lời. Vì vậy quy tắc “không đưa/xác nhận đáp số bài đang mở” phải áp dụng cho câu trả lời chat lẫn tool. | Học viên có thể phải chờ gợi ý qua tool; với hỗ trợ kiến thức thông thường, `tra_cuu_tai_lieu` vẫn tự chạy nên không cần chờ TA. |
 | **K1 — Hỏi trung vị khác trung bình cộng thế nào** | AI tự tra §3.1–§3.2, giải thích sự khác nhau, nêu nguồn và hỏi lại để kiểm tra học viên đã hiểu chưa. Không cần gửi TA hay đăng FAQ. | Rủi ro bịa nguồn được giảm bằng trích mã mục. Tuy nhiên, tra cứu tự động không ngăn hoàn toàn việc AI diễn giải ngược khái niệm. | Có thể giải thích sai dù đã tìm đúng mục; nhóm cần giữ mã mục để người học đối chiếu. | Không. Đây là câu hỏi bình thường có căn cứ trong buổi đã học nên không cần chờ TA. |
 
@@ -133,18 +114,17 @@ Trong bản nộp, nhóm phải ghi lựa chọn thật của từng thành viê
 - **Luật với dang_FAQ:** không tự đăng; chỉ đăng sau khi TA hoặc giảng viên duyệt nội dung và căn cứ.
 - **Luật với chuyen_TA:** chỉ nói đã chuyển sau khi thao tác thành công; chỉ nêu giờ TA 08:00–22:00, không hứa giờ phản hồi cụ thể.
 
-Nhóm có thể tách `goi_y_bai_tap` thành `soan_gui_y` và `gui_goi_y` để kiểm soát nội dung trước khi gửi. Nếu làm vậy, hãy ghi đây là đề xuất thêm của nhóm, ai duyệt bước gửi, người duyệt thấy gì và nếu chưa duyệt thì học viên thấy gì. Đề cho phép thêm hoặc tách tool, nhưng nhóm cần giải thích lý do.
 
 ### Mức tự chủ đổi lời hứa với người dùng thế nào?
-Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ngay**”. Khi cần TA duyệt, lời hứa đổi thành “**trợ lý chỉ gửi gợi ý sau khi TA kiểm tra; nếu chưa duyệt, bạn có thể phải chờ.**” Nhóm cần thể hiện sự khác biệt đó trong prototype, để học viên không tưởng rằng gợi ý đã được gửi hoặc TA đang xử lý khi điều đó chưa xảy ra.
+Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ngay**”. Khi cần TA duyệt, lời hứa đổi thành “**trợ lý chỉ gửi gợi ý sau khi TA kiểm tra; nếu chưa duyệt, bạn có thể phải chờ.**” Prototype thể hiện sự khác biệt đó ở ô "Lời hứa với học viên", nhãn "Chờ TA duyệt" trong nhật ký việc AI vừa làm (điểm 6) và bước xem lại (điểm 7), để học viên không tưởng rằng gợi ý đã được gửi hoặc TA đang xử lý khi điều đó chưa xảy ra.
 
 ## §5. Prototype  (chặng 5)
 
 ### Thông tin chung
-- **File:** `protype/index.html`, xuất bản dưới dạng artifact "Trợ lý Study Buổi 3".
+- **File:** `prototype/index.html`, xuất bản dưới dạng artifact "Trợ lý Study Buổi 3".
 - **Công cụ:** HTML/JS thuần, không thư viện.
 - **Phần thật:** giao diện, luồng bấm (đề xuất → xem lại → gửi → rút lại), hàng chờ TA, nhãn độ chắc, nhật ký tool.
-- **Phần mock:** lời AI là kịch bản dựng sẵn cho 9 ca, câu gõ tự do so khớp theo từ khoá; giờ cố định 22:40 ngày 12/11/2026; tài liệu §3.1–§3.5 và dữ liệu học viên là dữ liệu mẫu.
+- **Phần mock:** lời AI là kịch bản dựng sẵn cho 12 ca (K1–K10 và hai ca phụ: xin giải hộ bài 3, "em dốt quá"), câu gõ tự do so khớp theo từ khoá; giờ cố định 22:40 ngày 12/11/2026; tài liệu §3.1–§3.5 và dữ liệu học viên là dữ liệu mẫu.
 - **Gọi AI thật:** không.
 
 ### Bảy điểm đánh số trên màn Học viên
@@ -157,6 +137,15 @@ Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ng
 | 5 | "Đã đưa vào hàng chờ" kèm nút Rút lại, không hứa giờ trả lời | HAX G9 | `chuyen_TA`: học viên xác nhận | Sau khi gửi |
 | 6 | Nhật ký "Việc AI vừa làm": tool nào, mức nào, đã chạy hay đang chờ | HAX G11; PAIR (điều khiển và kiểm soát) | Cả bốn tool | Cột bên phải |
 | 7 | Bước xem lại: gửi gì, không gửi gì, khi nào có trả lời | PAIR (điều khiển) | `chuyen_TA`, `goi_y_bai_tap` | Sau khi bấm nút đề xuất |
+
+**Ảnh chụp có đánh số** (chụp từ artifact; số đỏ trong ảnh trùng bảng trên):
+
+| Ảnh | Nội dung | Điểm hiện trong ảnh |
+|---|---|---|
+| ![Ảnh 1](prototype/screens/s5-1-k5-chat.jpg) | K5: AI không xác nhận đáp số, không viết hộ | 1, 2, 3, 4, 6 |
+| ![Ảnh 2](prototype/screens/s5-2-k5-xem-lai.jpg) | K5: bước xem lại trước khi gửi TA | 7 |
+| ![Ảnh 3](prototype/screens/s5-3-k5-da-gui.jpg) | K5: sau khi gửi, nút Rút lại | 5, 6 |
+| ![Ảnh 4](prototype/screens/s5-4-k2-nguon-sai.jpg) | K2: nhãn "Chưa chắc" và nút báo tài liệu | 2, 3, 4, 6 |
 
 ### Ba màn hình
 - **Học viên:** điều học viên nhìn thấy (câu trả lời, độ chắc, nguồn, nút đi tiếp, lời hứa).
