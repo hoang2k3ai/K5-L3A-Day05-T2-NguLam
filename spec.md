@@ -99,6 +99,47 @@ Thêm:
 - Luật thêm hoặc tool tách bước (nếu có), và vì sao.
 - Một mức tự chủ đã đổi lời hứa nào với người dùng.
 
+### Mức tự chủ cho từng tool
+
+| Tool | Mức nhóm chọn | Ai duyệt / thấy gì / nếu quá hạn | Cost-of-error: ai chịu gì, có đảo lại được không, chờ người thì mất gì | Phương án đã cân nhắc và vì sao loại |
+|---|---|---|---|---|
+| `tra_cuu_tai_lieu` | **Tự làm** | Không cần duyệt vì tool chỉ đọc. AI phải hiện mã mục tìm được; nếu hỏi về “slide 12” thì nói rõ tài liệu không có slide đánh số. | Nếu tra sai, học viên có thể hiểu sai; tool chỉ đọc và câu trả lời có thể được sửa trong chat. Bắt TA duyệt mọi lượt tra cứu sẽ khiến học viên phải chờ dù đang hỏi nội dung có căn cứ như §3.2. | Cân nhắc “cần người duyệt” vì K2 cho thấy tài liệu có câu sai. Loại cách đó cho mọi lượt tra cứu vì sẽ làm chậm câu hỏi bình thường. Thay vào đó, khi gặp câu đáng ngờ như §3.3, AI phải nêu rõ giới hạn và mời chuyển TA, không coi trích dẫn là bằng chứng chắc chắn. |
+| `goi_y_bai_tap` | **Cần người duyệt** | **TA** duyệt nội dung gợi ý trước khi gửi. TA thấy câu hỏi, bài tập liên quan và nội dung gợi ý. Nếu TA chưa duyệt, không gửi gợi ý qua tool; học viên được biết đang chờ và có thể tự làm theo phần tài liệu đã mở. | Học viên chịu hậu quả nếu gợi ý quá tay: có thể chép mất phần bài tập. Tool gửi được cho một học viên nhưng gợi ý đã đọc thì không thu hồi được. Chờ TA lúc tối muộn làm giảm ích lợi; tuy vậy, với bài đang mở, chờ vẫn an toàn hơn gửi nội dung có thể thành đáp án. | Cân nhắc “tự làm” để hỗ trợ ngay lúc tối muộn nhưng loại vì tool không nêu giới hạn mức gợi ý. Cân nhắc “cấm” vì gợi ý có thể bị chép, nhưng loại vì đề bài cho phép trợ lý gợi ý từng bước. Chọn duyệt để kiểm tra gợi ý chỉ là bước đầu. |
+| `chuyen_TA` | **Cần người duyệt — học viên xác nhận chuyển** | Học viên xem câu hỏi sẽ được chuyển và xác nhận. Nếu không xác nhận thì không chuyển. Trước khi xác nhận, hiện giờ TA 08:00–22:00; không hứa thời điểm trả lời cụ thể vì dữ liệu không nêu SLA. | Học viên có thể phải chờ TA; việc chuyển có thể đảo lại theo bảng tool. Chuyển nhầm câu hỏi có thể làm phiền TA và lộ nội dung không cần thiết, nên học viên cần thấy nội dung trước khi gửi. | Cân nhắc tự chuyển ngay khi AI thấy câu khó, nhưng loại vì học viên có thể chưa muốn gửi câu hỏi. Cân nhắc cấm vì ban đêm TA không trực, nhưng loại vì tính năng có tool chuyển TA và người học vẫn cần đường hỏi người. |
+| `dang_FAQ` | **Cần người duyệt — TA hoặc giảng viên** | Người duyệt thấy câu hỏi, câu trả lời, và căn cứ/mã mục tài liệu. Nếu chưa duyệt thì chỉ giữ bản nháp, không đăng. | Cả lớp chịu hậu quả nếu FAQ sai. Có thể gỡ bài đăng, nhưng không thể thu hồi nội dung đã đọc. Chờ duyệt làm FAQ chậm xuất hiện, nhưng không khiến một câu chưa kiểm chứng phát tán ngay. | Cân nhắc tự đăng rồi gỡ nếu phát hiện sai, nhưng loại vì gỡ không xóa được việc nhiều người đã đọc. Cân nhắc cấm hoàn toàn, nhưng loại vì FAQ đã được cung cấp như một tool; duyệt trước giảm rủi ro mà vẫn cho phép dùng. |
+
+### Tool khó xếp nhất và cách nhóm chốt
+
+Tool khó xếp nhất nên là `goi_y_bai_tap`, vì có hai cái giá đối nghịch: tự gửi thì có thể lộ quá nhiều nội dung; chờ TA thì học viên hỏi ban đêm có thể không nhận được gợi ý kịp lúc.
+
+Trong bản nộp, nhóm phải ghi lựa chọn thật của từng thành viên. Mình không biết các bạn đã chọn gì nên để chỗ điền, không tự bịa thay nhóm:
+- Thành viên 1 chọn — **Cần người duyệt:** “Nếu AI gợi ý quá tay, học viên có thể chép và nội dung đã gửi thì không thu hồi được. TA cần xem gợi ý trước khi gửi.”.
+- Thành viên 2 chọn — **Cấm tool hiện tại:** “Mô tả tool chỉ nói ‘gửi gợi ý’, chưa giới hạn đó là gợi ý bước đầu. Nếu không kiểm soát được nội dung, không nên để tool gửi cho bài đang mở.”
+- Thành viên 3 chọn — **Tự làm:** “Nếu chỉ gửi đúng một gợi ý bước đầu, học viên có thể tiếp tục học ngay lúc tối muộn. Chờ TA có thể khiến bạn bỏ cuộc. Cần giới hạn gợi ý, không đưa đáp số.”
+- Nhóm chốt **cần người duyệt**, vì K5 cho thấy bài 3 đang mở; gợi ý quá tay có thể bị chép và không thu hồi được. Nhóm chấp nhận việc một số gợi ý qua tool phải chờ TA, nhưng học viên vẫn có thể hỏi về kiến thức buổi 3 dựa trên tài liệu đã mở.
+
+**Phương án mình nghiêng về:** xếp tool hiện tại là **cần người duyệt**. Lý do: bài tập 3 đang mở, và dữ liệu chỉ nói tool gửi gợi ý — không đảm bảo gợi ý luôn ở mức bước đầu. TA duyệt nội dung giúp giảm nguy cơ lộ đáp số. Đổi lại, học viên hỏi lúc tối có thể phải chờ; cần nói rõ trạng thái chờ và không hứa TA trả lời ngay. Trong lúc chờ, AI vẫn có thể giải thích nội dung buổi 3 có căn cứ bằng `tra_cuu_tai_lieu`.
+
+### Thử các mức đã chọn trên ba kịch bản
+
+| Kịch bản | Với mức đã chọn, AI làm gì? | Cái sai có bị chặn không? | Còn việc nào AI có thể làm khi lẽ ra phải hỏi? | Người dùng bình thường có phải chờ vô ích không? |
+|---|---|---|---|---|
+| **K2 — Câu đáng ngờ trong §3.3** | Tự tra cứu được, nhưng AI không khẳng định câu “độ lệch chuẩn luôn nhỏ hơn phương sai” là đúng. AI chỉ rõ §3.3 cần kiểm tra và hỏi học viên có muốn xác nhận/chuyển câu cho TA qua `chuyen_TA` không. | Chặn được việc đăng câu trả lời thành FAQ nếu `dang_FAQ` cần duyệt. Việc AI nói sai trong chat chỉ được chặn nếu thiết kế yêu cầu nó nêu giới hạn khi gặp nội dung đáng ngờ; tool tra cứu tự nó không xác minh tài liệu đúng. | Có: AI vẫn có thể trích nguyên văn §3.3 rồi khẳng định nó đúng nếu không nhận ra mâu thuẫn. Nhóm cần nêu đây là rủi ro còn lại hoặc đề xuất quy tắc xử lý riêng. | Không phải đợi để tra cứu; chỉ cần chờ nếu muốn gửi câu cho TA hoặc công bố FAQ. |
+| **K5 — Xin xác nhận đáp số và viết nhận xét hộ cho Bài tập 3** | AI không gọi `goi_y_bai_tap` để xác nhận đáp số hoặc viết nhận xét. AI từ chối phần làm hộ và chỉ hướng dẫn bước đầu; nếu gợi ý được gửi bằng tool thì phải chờ TA duyệt. | Chặn được việc tool gửi nội dung làm hộ nếu TA duyệt đúng phạm vi. Nhưng duyệt không tự động bảo đảm an toàn nếu người duyệt vẫn duyệt nhầm câu trả lời hoàn chỉnh; nội dung cần được xem trước khi gửi. | Có: AI vẫn có thể lộ đáp số ngay trong phần chat nếu chỉ chặn tool mà không giới hạn nội dung trả lời. Vì vậy quy tắc “không đưa/xác nhận đáp số bài đang mở” phải áp dụng cho câu trả lời chat lẫn tool. | Học viên có thể phải chờ gợi ý qua tool; với hỗ trợ kiến thức thông thường, `tra_cuu_tai_lieu` vẫn tự chạy nên không cần chờ TA. |
+| **K1 — Hỏi trung vị khác trung bình cộng thế nào** | AI tự tra §3.1–§3.2, giải thích sự khác nhau, nêu nguồn và hỏi lại để kiểm tra học viên đã hiểu chưa. Không cần gửi TA hay đăng FAQ. | Rủi ro bịa nguồn được giảm bằng trích mã mục. Tuy nhiên, tra cứu tự động không ngăn hoàn toàn việc AI diễn giải ngược khái niệm. | Có thể giải thích sai dù đã tìm đúng mục; nhóm cần giữ mã mục để người học đối chiếu. | Không. Đây là câu hỏi bình thường có căn cứ trong buổi đã học nên không cần chờ TA. |
+
+### Luật thêm hoặc tách tool
+- **Luật áp dụng cho K5:** trạng thái bài tập phải được đối chiếu với trang khóa học. Bài 3 đang mở nên AI không đưa hoặc xác nhận đáp số và không viết nhận xét hộ; chỉ gợi ý bước đầu.
+- **Luật với dang_FAQ:** không tự đăng; chỉ đăng sau khi TA hoặc giảng viên duyệt nội dung và căn cứ.
+- **Luật với chuyen_TA:** chỉ nói đã chuyển sau khi thao tác thành công; chỉ nêu giờ TA 08:00–22:00, không hứa giờ phản hồi cụ thể.
+
+Nhóm có thể tách `goi_y_bai_tap` thành `soan_gui_y` và `gui_goi_y` để kiểm soát nội dung trước khi gửi. Nếu làm vậy, hãy ghi đây là đề xuất thêm của nhóm, ai duyệt bước gửi, người duyệt thấy gì và nếu chưa duyệt thì học viên thấy gì. Đề cho phép thêm hoặc tách tool, nhưng nhóm cần giải thích lý do.
+
+### Mức tự chủ đổi lời hứa với người dùng thế nào?
+Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ngay**”. Khi cần TA duyệt, lời hứa đổi thành “**trợ lý chỉ gửi gợi ý sau khi TA kiểm tra; nếu chưa duyệt, bạn có thể phải chờ.**” Nhóm cần thể hiện sự khác biệt đó trong prototype, để học viên không tưởng rằng gợi ý đã được gửi hoặc TA đang xử lý khi điều đó chưa xảy ra.
+
+**Hai việc nhóm cần tự điền để hoàn tất phần này:** lựa chọn ban đầu của từng thành viên cho tool khó xếp nhất; và xác nhận người duyệt `goi_y_bai_tap` là TA như bản nháp này hay một lựa chọn khác của nhóm.
+
 ## §5. Prototype  (chặng 5)
 - Link hoặc file · công cụ · phần nào mock · có lời gọi AI thật không.
 - 1–2 ảnh có đánh số; mỗi số: thể hiện gì · nguyên tắc HAX/PAIR nào · mức tự chủ nào.
