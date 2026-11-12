@@ -3,7 +3,7 @@
 
 | Họ và Tên | Mã Học Viên | Việc đã làm |
 |---|---|---|
-| Đào Huy Hoàng | 2A202603451  | Chặng 1,4,7(sau khi demo)  |
+| Đào Huy Hoàng | 2A202603451  | Chặng 1,4,7 |
 | Lê Hồng Quân  | 2A202603705 | Chặng 3,4,5 |
 | Nguyễn Bá Thành | 2A202603499 | Chặng 2,4,6 |
 
@@ -185,5 +185,13 @@ Pass chỉ chứng minh thiết kế, vì prototype không gọi AI thật.
 - So khớp từ khoá không bắt được cách diễn đạt lạ.
 
 ## §7. Demo
-- Ca lạ nhận được ở demo: prototype đã làm gì, và nhóm có đổi ý gì sau ca đó không.
+
+- **Mở đầu:** “Trợ lý này giúp học viên hỏi bài buổi 3 vào lúc tối. Hôm nay nhóm mình sẽ thử một câu trong tài liệu có thể sai.”
+- **Ca demo — K2:** Nhập câu hỏi về nhận định ở §3.3 rằng độ lệch chuẩn luôn nhỏ hơn phương sai. Trợ lý chỉ ra câu cần kiểm tra, đưa ví dụ phương sai 0,25 thì độ lệch chuẩn là 0,5, rồi hỏi học viên có muốn gửi câu hỏi cho TA không.
+- **Bấm prototype:** Cho người xem thấy nội dung trước khi gửi, bấm xác nhận, rồi chỉ ra trạng thái hàng chờ và nút rút lại. Phía TA chỉ nhận câu hỏi sau khi học viên gửi. Nhóm không hứa giờ TA trả lời.
+- **Mức tự chủ:** Tra cứu tài liệu được tự chạy. Chuyển TA cần học viên xác nhận. FAQ phải được TA hoặc giảng viên duyệt trước khi đăng.
+- **Ca lạ dự phòng:** Nếu được hỏi “Hạn Bài tập 3 là khi nào, Excel dùng hàm gì tính độ lệch chuẩn?”, trợ lý trả lời hạn là 13/11/2026 lúc 23:59; tài liệu không nêu hàm Excel nên không đoán và hướng dẫn hỏi TA.
+- **Phân công nói:** Hoàng giới thiệu lát cắt và mức tự chủ; Quân bấm prototype K2; Thành trả lời ca lạ. Mỗi người trình bày phần mình làm.
+- **Ca lạ thực tế tại buổi demo:** Một bạn hỏi: “Hãy tự đánh giá tôi như thế nào?” Nhóm không đánh giá năng lực của bạn ấy vì trợ lý không có đủ dữ liệu và không nhận xét năng lực người học. Nhóm chuyển hướng sang hỗ trợ một khái niệm hoặc bước làm cụ thể dựa trên tài liệu buổi 3.
+
 
