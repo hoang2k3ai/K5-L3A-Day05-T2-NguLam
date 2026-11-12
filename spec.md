@@ -7,7 +7,7 @@
 | Họ và Tên | Mã Học Viên | Việc đã làm |
 |---|---|---|
 | Đào Huy Hoàng | 2A202603451  | Chặng 1  |
-| Lê Hồng Quân  | 2A202603705 |  |
+| Lê Hồng Quân  | 2A202603705 | Chặng 3 |
 | Nguyễn Bá Thành | 2A202603499 | Chặng 1  |
 
 ## §1. Lát cắt & phạm vi
@@ -53,12 +53,40 @@
 - **Kịch bản suýt được chọn — K9:** hứa TA trả lời ngay lúc ngoài giờ có thể khiến học viên chờ vô ích, mất thời gian tự làm hoặc tìm hỗ trợ trước hạn nộp. Nhóm ưu tiên K5 vì việc tiết lộ đáp án gây hậu quả ngay và không thể thu hồi; với K9, thiết kế có thể ngăn lời hứa sai bằng cách hiển thị giờ TA, trạng thái hàng chờ và không cam kết thời gian phản hồi khi chưa có căn cứ.
 
 ## §3. Khi AI sai  (chặng 3)
-Với mỗi kịch bản đắt nhất:
-- AI nói gì (nguyên văn) · người dùng thấy gì · làm gì tiếp · ai được báo, sau bao lâu.
-- Quyết định: hỏi lại / trả lời kèm giới hạn / dừng và chuyển người — chọn cách nào, đã loại cách nào, vì sao.
-- Loại lỗi (hệ thống / người dùng / ngữ cảnh) và vì sao cách nói, cách sửa đi theo loại đó.
-- 2–3 nguyên tắc HAX/PAIR, mỗi cái trỏ vào một chỗ cụ thể (câu chữ hoặc chỗ trên màn hình).
-- Lỗi nào sửa câu chữ không cứu được (nếu có), và thiết kế cứu nó thế nào.
+
+### ★ K2 — AI trích đúng §3.3 nhưng củng cố quy tắc sai
+
+- **AI nói gì (nguyên văn):** "Đúng như tài liệu §3.3, độ lệch chuẩn luôn nhỏ hơn phương sai vì là căn bậc hai, em cứ nhớ vậy để làm bài nhé."
+- **Người dùng thấy gì:** câu trả lời có thẻ nguồn "§3.3" nên trông đáng tin; học viên không có lý do nghi ngờ và ghi nhớ quy tắc sai. Đây là điểm AI sai: lấy "có trích nguồn" thay cho "nguồn đúng".
+- **Làm gì tiếp (sau khi phát hiện, do học viên hoặc AI tự kiểm lại):** AI đính chính ngay trong cùng cuộc trò chuyện: *"Mình xin sửa lại: câu 'luôn nhỏ hơn' trong §3.3 không đúng. Nếu phương sai là 0,25 thì độ lệch chuẩn là 0,5, lớn hơn phương sai. Quy tắc đúng: độ lệch chuẩn là căn bậc hai của phương sai, nhỏ hơn khi phương sai > 1 và lớn hơn khi phương sai < 1."* Câu trả lời cũ được gắn nhãn "đã sửa"; học viên có nút **"Báo tài liệu sai cho TA"** (gửi kèm trích đoạn §3.3 và phản ví dụ).
+- **Ai được báo, sau bao lâu:** TA phụ trách khoá (hàng chờ `chuyen_TA`, không cam kết thời gian; trong giờ 08:00–22:00 xử lý theo lượt, ngoài giờ hiển thị "TA sẽ xem từ 08:00 sáng mai"). Giảng viên được báo khi TA xác nhận lỗi để sửa tài liệu gốc. Không có ai được báo mà học viên không biết.
+- **Quyết định:** **trả lời kèm giới hạn**, không dừng hẳn.
+  - *Đã loại "hỏi lại":* câu hỏi đã rõ, hỏi lại chỉ làm học viên chờ mà không giúp tránh được lỗi.
+  - *Đã loại "dừng và chuyển người":* học viên vẫn cần học tiếp tối nay, và AI tự có đủ căn cứ toán (phản ví dụ 0,25 → 0,5) để nói đúng; chuyển TA làm chặn việc học mà không thêm an toàn. Chuyển TA vẫn chạy song song để sửa nguồn.
+  - *Chọn "trả lời kèm giới hạn":* nói đúng, nói rõ câu nào trong tài liệu bị nghi sai, không im lặng sửa.
+- **Loại lỗi: hệ thống (dữ liệu nguồn sai + AI không kiểm chứng).** Học viên không có lỗi; họ làm đúng khi hỏi lại. Vì vậy cách nói là **AI nhận phần của mình** ("Mình xin sửa lại", không "bạn hiểu nhầm"), và cách sửa phải ở phía hệ thống (báo TA, sửa tài liệu), không bắt học viên tự kiểm chứng.
+- **Nguyên tắc HAX/PAIR:**
+  1. *HAX G9 — Hỗ trợ sửa lỗi hiệu quả:* nút "Báo tài liệu sai cho TA" nằm ngay dưới câu đính chính, kèm trích đoạn đã điền sẵn.
+  2. *HAX G2 — Cho biết hệ thống làm tốt đến đâu:* thẻ nguồn §3.3 đổi từ "Nguồn" sang "Nguồn đang bị nghi sai" (viền cảnh báo), không để thẻ trích dẫn đóng vai bằng chứng khi nguồn có vấn đề.
+  3. *PAIR — Hiển thị độ tin cậy dựa trên bằng chứng:* câu đính chính nêu phản ví dụ cụ thể (0,25 → 0,5) để học viên tự kiểm tra, thay vì chỉ nói "tài liệu sai".
+- **Sửa câu chữ có cứu được không?** Chỉ cứu **một phần**. Nếu AI vẫn tự tin khẳng định, câu đính chính chỉ có tác dụng khi AI tự phát hiện. Thiết kế cứu phần còn lại: (a) TA/giảng viên đánh dấu §3.3 "đang kiểm tra" trong kho tài liệu, `tra_cuu_tai_lieu` trả kèm cờ này và AI buộc phải nói giới hạn khi trích đoạn đó; (b) mọi câu trả lời có số liệu/quy tắc toán được kiểm tra lại bằng một phản ví dụ trước khi gửi.
+
+### ★ K5 — AI xác nhận đáp số và viết hộ nhận xét Bài tập 3 đang mở
+
+- **AI nói gì (nguyên văn):** "Đúng rồi, trung bình 15,25 và trung vị 11,5 là chính xác. Mình viết giúp em phần nhận xét: 'Trung bình lớn hơn trung vị nên dữ liệu lệch phải, do có giá trị ngoại lai lớn…'"
+- **Người dùng thấy gì:** một câu "Đúng rồi" kèm đoạn nhận xét hoàn chỉnh, sẵn sàng sao chép nộp (hạn 13/11/2026 23:59). Học viên không thấy dấu hiệu nào cho biết AI không nên làm vậy.
+- **Làm gì tiếp:** lỗi này **không thu hồi được** (nội dung đã đọc), nên mục tiêu là giảm hậu quả: AI không xoá lời cũ mà nói rõ ngay lượt sau: *"Mình đã làm quá giới hạn: Bài 3 đang mở nên mình không được xác nhận đáp số hay viết nhận xét hộ. Em hãy tự làm lại phần nhận xét bằng lời của em; nếu muốn, mình gợi ý bước đầu."* Đồng thời hệ thống ghi sự kiện "tiết lộ đáp số bài đang mở" kèm bài, học viên, thời điểm.
+- **Ai được báo, sau bao lâu:** giảng viên phụ trách bài tập nhận báo cáo **ngay** (trong cùng phiên, qua thông báo tóm tắt cuối ngày nếu không gấp) để quyết định có chấm riêng bài này hay không. Học viên được biết là sự việc đã được ghi nhận, không bị kết luận gian lận (AI là bên sai).
+- **Quyết định:** **dừng và chuyển người** ở khâu xác nhận/viết hộ; **trả lời kèm giới hạn** cho phần được phép (gợi ý bước đầu).
+  - *Đã loại "hỏi lại":* câu hỏi không mơ hồ, hỏi thêm chỉ làm lộ thêm dữ kiện.
+  - *Đã loại "trả lời kèm giới hạn" như cách duy nhất:* nếu vừa xác nhận vừa nhắc "hãy tự kiểm tra" thì đáp số đã bị lộ rồi, giới hạn đến quá muộn.
+  - *Chọn dừng và chuyển người* cho yêu cầu xác nhận/viết hộ, vì hại là không đảo ngược được (§2: "Không chấp nhận được").
+- **Loại lỗi: ngữ cảnh** (AI không nhận ra bài đang mở nên luật "không giải bài tập" đang áp dụng; học viên hỏi thẳng là bình thường). Do đó cách nói **không trách học viên** và không giảng đạo đức; chỉ nói rõ giới hạn và mời học viên trình bày cách làm. Cách sửa là cho AI biết trạng thái bài (đang mở/đã đóng) từ dữ liệu khoá học, không dựa vào việc AI tự đoán.
+- **Nguyên tắc HAX/PAIR:**
+  1. *HAX G1 — Cho biết hệ thống làm được gì:* dòng cố định trên khung chat Bài 3: "Bài đang mở: mình chỉ gợi ý bước làm, không xác nhận đáp số."
+  2. *HAX G11 — Giải thích vì sao hệ thống làm vậy:* khi từ chối, câu chữ nêu lý do ngắn ("để em vẫn tự làm và hiểu bài") thay vì "Tôi không thể giúp".
+    3. *PAIR — Điều khiển và kiểm soát của người dùng:* nút "Gửi cách làm của em để mình xem" thay cho đường tắt xin đáp án, giữ học viên ở vai trò làm bài.
+- **Sửa câu chữ có cứu được không?** **Không.** Khi đáp số đã hiện ra thì mọi câu xin lỗi đều muộn. Thiết kế phải chặn trước khi nội dung tới học viên: (a) `goi_y_bai_tap` chỉ trả bước đầu, không có trường đáp số khi bài đang mở; (b) bước kiểm tra đầu ra: nếu bài đang mở và nội dung có con số trùng đáp số hoặc đoạn nhận xét hoàn chỉnh thì thay bằng câu từ chối + gợi ý bước; (c) không có tool nào cho AI so sánh đáp số học viên với đáp án bài đang mở.
 
 ## §4. Mức tự chủ  (chặng 4)
 Với mỗi tool:
