@@ -1,16 +1,23 @@
-# Dàn ý bài nộp *(spec.md — nộp trước 23:59 ngày lab của lớp)*
-
-> Copy dàn ý này vào `spec.md` của nhóm. Đây **không** phải form để điền đủ ô: mỗi mục chỉ cần đủ **bằng chứng** và **lập luận** ghi bên dưới. Viết ngắn, gạch đầu dòng là được. Hướng dẫn từng chặng: `02-guide.md`. Cách chấm: `04-rubric.md`.
->
-> **Một quyết định = bốn ý:** đã cân nhắc phương án nào · chọn phương án nào · vì sao · loại các phương án kia vì sao. Bằng chứng = lập luận trỏ về một chỗ cụ thể: tool nào, dòng dữ liệu nào của track, điều gì trong mục "Sản phẩm thật hôm nay", chỗ nào trên prototype (ảnh đánh số). Không chạy agent.
+# Dàn ý bài nộp
 
 ```markdown
 # Bài nộp LAB5 — [Track] · Nhóm [tên]
-[Danh sách thành viên và việc mỗi người làm — copy bảng từ README]
+**Lớp:** L3A · **Bàn / zone:** B1 · **Track:** T2
+
+| Họ và Tên | Mã Học Viên | Việc đã làm |
+|---|---|---|
+| Đào Huy Hoàng | 2A202603451  | Chặng 1  |
+| Lê Hồng Quân  | 2A202603705 |  |
+| Nguyễn Bá Thành | 2A202603499 | Chặng 1  |
 
 ## §1. Lát cắt & phạm vi
-- Lát cắt (chép từ track).
-- 3 việc tính năng KHÔNG làm, mỗi việc một câu vì sao.
+- **Lát cắt (phát sẵn, không chọn lại).** Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
+
+- **3 việc tính năng KHÔNG làm, mỗi việc một câu vì sao.**
+1. AI không giải hộ và không xác nhận đáp số của bài tập đang mở; AI chỉ được gợi ý các bước làm. Vì AI chỉ gợi ý bước làm đầu tiên để học viên vẫn tự làm bài và không chép đáp án.
+2. AI không bịa đáp khi không có nguồn dữ liệu. Vì sẽ khiến học viên tin và học theo thông tin không có căn cứ.
+3. Không tự đăng câu trả lời thành FAQ cho cả lớp. Vì nếu tự ý đăng mà câu trả lời sai, nhiều học viên có thể đọc và hiểu sai trước khi FAQ được gỡ.
+
 
 ## §2. Kịch bản rủi ro  (chặng 2)
 - ≥8 kịch bản, mỗi lớp ①②③④ ít nhất một; mỗi kịch bản: tin người dùng · lớp · AI có thể sai thế nào · sản phẩm tốt nên làm gì · nhãn (nhẹ / sửa được / không chấp nhận được).
