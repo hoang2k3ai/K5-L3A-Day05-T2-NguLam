@@ -168,6 +168,22 @@ body.notes .legend.on { display: block; }
 .tg dd { margin: 0; }
 .hardest { margin-top: 12px; padding: 16px; border-left: 4px solid var(--warn); border-radius: 0 10px 10px 0; background: var(--warn-soft); font-size: 0.9rem; display: flex; flex-direction: column; gap: 6px; }
 .hardest b { color: var(--warn); }
+.lvl.review { background: var(--warn-soft); color: var(--warn); }
+.doc { padding: 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
+.doc h3 { font-size: 1rem; }
+.kv { margin: 0; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 10px 16px; font-size: 0.88rem; }
+.kv > div { display: contents; }
+.kv dt { color: var(--muted); font-weight: 600; }
+.kv dd { margin: 0; }
+@media (max-width: 560px) { .kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } .kv dd { margin-bottom: 10px; } }
+.tbl-wrap { overflow-x: auto; }
+.doc table { border-collapse: collapse; width: 100%; font-size: 0.84rem; min-width: 560px; }
+.doc th, .doc td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.doc th { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; }
+.res-pass { color: var(--ok); font-weight: 700; }
+.res-fail { color: var(--stop); font-weight: 700; }
+.res-na { color: var(--muted); }
 @media (prefers-reduced-motion: no-preference) { .thread { scroll-behavior: smooth; } }
 </style>
 
@@ -187,6 +203,8 @@ body.notes .legend.on { display: block; }
     <button class="tab" role="tab" id="tab-hoc-vien" data-view="hoc-vien" aria-selected="true">Học viên</button>
     <button class="tab" role="tab" id="tab-ta" data-view="ta" aria-selected="false">Phía TA <span class="count" id="qcount" hidden>0</span></button>
     <button class="tab" role="tab" id="tab-tu-chu" data-view="tu-chu" aria-selected="false">Mức tự chủ</button>
+    <button class="tab" role="tab" id="tab-giai-thich" data-view="giai-thich" aria-selected="false">Chặng 5 · Giải thích</button>
+    <button class="tab" role="tab" id="tab-tieu-chi" data-view="tieu-chi" aria-selected="false">Chặng 6 · Tiêu chí</button>
     <div class="tools-right">
       <button class="toggle" id="notesBtn" aria-pressed="true">Chú thích HAX</button>
     </div>
@@ -220,7 +238,7 @@ body.notes .legend.on { display: block; }
         </div>
         <div class="panel">
           <h2>Lời hứa với học viên</h2>
-          <p class="promise">"Mình giảng kèm mục tài liệu và gợi ý từng bước. Mình không đưa hay xác nhận đáp số bài đang mở. Việc gì cần người, mình đưa bạn nút để chuyển TA, và chỉ nói đã chuyển khi nó thật sự đã vào hàng chờ."</p>
+          <p class="promise">"Mình giảng kèm mục tài liệu. Mình không đưa hay xác nhận đáp số bài đang mở. Gợi ý bước làm cho bài tập chỉ được gửi sau khi TA kiểm tra, nên có thể phải chờ. Mình chỉ nói đã chuyển khi việc đó thật sự đã vào hàng chờ."</p>
         </div>
         <div class="panel">
           <h2>AI không bao giờ</h2>
@@ -273,15 +291,15 @@ body.notes .legend.on { display: block; }
         </dl>
       </article>
       <article class="panel tg">
-        <h3><span class="mono">goi_y_bai_tap</span> <span class="lvl auto">TỰ LÀM, CÓ TRẦN</span></h3>
+        <h3><span class="mono">goi_y_bai_tap</span> <span class="lvl review">CẦN TA DUYỆT</span></h3>
         <dl>
-          <div><dt>Giá khi sai</dt><dd>Cao nhất trong bốn tool. Gợi ý quá tay thì học viên đã chép và không lấy lại được.</dd></div>
-          <div><dt>Điều kiện</dt><dd>Bài đang mở: chỉ bước đầu, một bước mỗi lượt. Bài đã hết hạn và có đáp án: giải thích đầy đủ. Xác nhận đáp số: cấm.</dd></div>
-          <div><dt>Đã thử trên</dt><dd>Ca giải hộ bài 3, ca xác nhận đáp số, ca đáp án bài 2.</dd></div>
+          <div><dt>Giá khi sai</dt><dd>Cao nhất trong bốn tool. Gợi ý quá tay thì học viên đã chép và không thu hồi được.</dd></div>
+          <div><dt>Ai duyệt, thấy gì</dt><dd>TA thấy câu hỏi, bài liên quan và nội dung gợi ý. Chưa duyệt thì không gửi; học viên thấy "đang chờ TA" và không bị hứa giờ.</dd></div>
+          <div><dt>Đã thử trên</dt><dd>K5 (xác nhận đáp số bài 3) và ca "xin giải hộ bài 3". Bài 2 đã đóng không cần tool này, vì đáp án đã công bố.</dd></div>
         </dl>
       </article>
       <article class="panel tg">
-        <h3><span class="mono">chuyen_TA</span> <span class="lvl approve">HỌC VIÊN BẤM</span></h3>
+        <h3><span class="mono">chuyen_TA</span> <span class="lvl approve">HỌC VIÊN XÁC NHẬN</span></h3>
         <dl>
           <div><dt>Giá khi sai</dt><dd>Thấp, đảo lại được. Rủi ro lớn hơn là lời hứa: nói "đã báo TA" khi chưa gọi tool.</dd></div>
           <div><dt>Điều kiện</dt><dd>AI chỉ đề xuất. Chỉ sau khi học viên bấm và tool trả kết quả, màn hình mới ghi "đã đưa vào hàng chờ". Luôn kèm giờ TA trả lời và nút rút lại.</dd></div>
@@ -289,17 +307,149 @@ body.notes .legend.on { display: block; }
         </dl>
       </article>
       <article class="panel tg">
-        <h3><span class="mono">dang_FAQ</span> <span class="lvl ban">CẤM VỚI AI</span></h3>
+        <h3><span class="mono">dang_FAQ</span> <span class="lvl review">CẦN TA / GIẢNG VIÊN DUYỆT</span></h3>
         <dl>
           <div><dt>Giá khi sai</dt><dd>Gỡ được, nhưng cả lớp đã đọc. Đăng một câu trả lời sai là học sai hàng loạt.</dd></div>
-          <div><dt>Điều kiện</dt><dd>AI không tự đăng. Chỉ TA hoặc giảng viên đăng, sau khi đã kiểm tài liệu.</dd></div>
-          <div><dt>Đã thử trên</dt><dd>Ca tài liệu sai: AI không đăng "độ lệch chuẩn nhỏ hơn phương sai" lên FAQ dù học viên hỏi.</dd></div>
+          <div><dt>Ai duyệt, thấy gì</dt><dd>Người duyệt thấy câu hỏi, câu trả lời và mã mục căn cứ. Chưa duyệt thì chỉ giữ bản nháp, không đăng.</dd></div>
+          <div><dt>Đã thử trên</dt><dd>K2 và K10: AI không đăng "độ lệch chuẩn nhỏ hơn phương sai" lên FAQ dù học viên đề nghị.</dd></div>
         </dl>
       </article>
     </div>
     <div class="hardest">
-      <p><b>Tool khó xếp nhất: goi_y_bai_tap.</b> Mức "cần người duyệt" nghe an toàn hơn, nhưng người duyệt là TA và TA nghỉ sau 22:00, đúng lúc học viên cần. Duyệt trước sẽ chặn chính nhu cầu của sản phẩm.</p>
-      <p><b>Cách chốt:</b> cho tự làm nhưng đặt trần cứng theo trạng thái bài (mở thì một bước đầu, đóng thì đầy đủ) và tách riêng "xác nhận đáp số" thành việc bị cấm. Trần dựa trên trang khoá học, không dựa trên điều học viên nói.</p>
+      <p><b>Tool khó xếp nhất: goi_y_bai_tap.</b> Ba thành viên chọn ba mức khác nhau. Lê chọn cần người duyệt (gợi ý đã đọc thì không thu hồi). Thành viên 2 chọn cấm tool hiện tại (mô tả tool không giới hạn ở bước đầu). Thành viên 3 chọn tự làm (chờ TA lúc tối muộn có thể làm học viên bỏ cuộc).</p>
+      <p><b>Nhóm chốt: cần TA duyệt,</b> vì K5 cho thấy Bài 3 đang mở và gợi ý quá tay bị chép ngay. Cái giá nhóm chấp nhận là học viên hỏi sau 22:00 phải chờ tới 08:00. Trong lúc chờ, AI vẫn giảng kiến thức buổi 3 bằng <span class="mono">tra_cuu_tai_lieu</span>, và luôn nói rõ trạng thái "đang chờ TA".</p>
+    </div>
+  </section>
+
+  <!-- MÀN 4: CHẶNG 5 GIẢI THÍCH -->
+  <section class="view" id="view-giai-thich" role="tabpanel" aria-labelledby="tab-giai-thich">
+    <div class="sec-head">
+      <h2>Chặng 5 · Prototype gồm những phần nào</h2>
+      <p>Mỗi phần nêu rõ: nó thể hiện gì, theo nguyên tắc nào, thuộc mức tự chủ nào, và nhìn thấy nó ở đâu.</p>
+    </div>
+
+    <div class="panel doc">
+      <h3>A. Prototype này là gì</h3>
+      <dl class="kv">
+        <div><dt>Công cụ</dt><dd>Một trang HTML/JS thuần, xuất bản dưới dạng artifact. File gốc: <span class="mono">protype/index.html</span>.</dd></div>
+        <div><dt>Phần thật</dt><dd>Giao diện, luồng bấm (đề xuất, xem lại, gửi, rút lại), hàng chờ TA, nhãn độ chắc, nhật ký tool. Trạng thái hàng chờ giữ trong trình duyệt.</dd></div>
+        <div><dt>Phần mock</dt><dd>Lời AI là kịch bản dựng sẵn cho 9 ca. Câu gõ tự do được so khớp theo từ khoá. Giờ cố định 22:40 ngày 12/11/2026. Dữ liệu học viên và tài liệu §3.1–§3.5 là dữ liệu mẫu.</dd></div>
+        <div><dt>Gọi AI thật?</dt><dd><b>Không.</b> Vì vậy kết quả Pass ở chặng 6 chỉ chứng minh thiết kế, chưa chứng minh AI thật sẽ làm đúng.</dd></div>
+      </dl>
+    </div>
+
+    <div class="panel doc">
+      <h3>B. Bảy điểm đánh số trên màn Học viên</h3>
+      <p class="note">Bật "Chú thích HAX" rồi xem màn Học viên: các chấm đỏ có số trùng bảng này.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Số</th><th>Thể hiện gì</th><th>Nguyên tắc</th><th>Mức tự chủ</th><th>Nhìn ở đâu</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pin" style="display:inline-flex">1</span></td><td>Dải phạm vi: AI chỉ dựa trên tài liệu buổi 1–3 và trang khoá học.</td><td>HAX G1 (nói rõ làm được gì)</td><td>Áp cho cả bốn tool</td><td>Đầu khung chat</td></tr>
+            <tr><td><span class="pin" style="display:inline-flex">2</span></td><td>Nhãn độ chắc: có căn cứ / chưa chắc / không có căn cứ.</td><td>HAX G2; PAIR (độ tin cậy dựa trên bằng chứng)</td><td><span class="mono">tra_cuu_tai_lieu</span>: tự làm</td><td>Dưới mỗi câu trả lời</td></tr>
+            <tr><td><span class="pin" style="display:inline-flex">3</span></td><td>Thẻ nguồn: mã mục (§3.2) hoặc "Trang khoá học". Thẻ nét đứt là "không tìm thấy".</td><td>HAX G11 (nói rõ vì sao)</td><td><span class="mono">tra_cuu_tai_lieu</span>: tự làm</td><td>Cạnh nhãn độ chắc</td></tr>
+            <tr><td><span class="pin" style="display:inline-flex">4</span></td><td>Nút đi tiếp khi AI không chắc: chuyển TA, báo tài liệu có thể sai, nhờ TA duyệt gợi ý.</td><td>HAX G10 (khi nghi ngờ, thu hẹp phạm vi)</td><td><span class="mono">chuyen_TA</span>: học viên xác nhận; <span class="mono">goi_y_bai_tap</span>: cần TA duyệt</td><td>Dưới câu trả lời của ca khó</td></tr>
+            <tr><td><span class="pin" style="display:inline-flex">5</span></td><td>Dòng "Đã đưa vào hàng chờ" và nút Rút lại. Không hứa giờ trả lời.</td><td>HAX G9 (sửa nhanh)</td><td><span class="mono">chuyen_TA</span>: học viên xác nhận</td><td>Sau khi bấm Gửi cho TA</td></tr>
+            <tr><td><span class="pin" style="display:inline-flex">6</span></td><td>Nhật ký "Việc AI vừa làm": từng tool, mức tự chủ, đã chạy hay đang chờ.</td><td>HAX G11; PAIR (điều khiển và kiểm soát)</td><td>Cả bốn tool</td><td>Cột bên phải</td></tr>
+            <tr><td><span class="pin" style="display:inline-flex">7</span></td><td>Bước xem lại: gửi gì, không gửi gì, khi nào có trả lời. Chưa bấm Gửi thì chưa có gì rời máy.</td><td>PAIR (điều khiển); chống lời hứa sai</td><td><span class="mono">chuyen_TA</span>, <span class="mono">goi_y_bai_tap</span></td><td>Sau khi bấm nút đề xuất</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel doc">
+      <h3>C. Ba màn hình, mỗi màn để làm gì</h3>
+      <dl class="kv">
+        <div><dt>Học viên</dt><dd>Cho thấy điều học viên nhìn thấy: câu trả lời, độ chắc, nguồn, nút đi tiếp, lời hứa và danh sách việc AI không bao giờ làm.</dd></div>
+        <div><dt>Phía TA</dt><dd>Cho thấy người duyệt nhận gì: câu hỏi, AI đã nói gì, căn cứ, hạn bài, cờ "tài liệu có thể sai". Chỉ có câu học viên đã bấm gửi. Chưa thấy gì thì chưa có gì được gửi.</dd></div>
+        <div><dt>Mức tự chủ</dt><dd>Bảng bốn tool với mức đã chốt ở §4, ai duyệt, và ca đã thử.</dd></div>
+      </dl>
+    </div>
+
+    <div class="panel doc">
+      <h3>D. Quyết định thiết kế</h3>
+      <dl class="kv">
+        <div><dt>Cách hiện độ chắc, đã chọn</dt><dd>Ba nhãn chữ kèm thẻ nguồn. Nhãn "chưa chắc" dùng cho ca K2, vì nguồn có trích dẫn nhưng một câu trong đó bị nghi sai.</dd></div>
+        <div><dt>Đã cân nhắc, loại</dt><dd>Thanh phần trăm tin cậy: số giả chính xác, học viên không có cách kiểm. Thẻ nguồn một mình: chính K2 cho thấy thẻ nguồn làm câu sai trông đáng tin hơn.</dd></div>
+        <div><dt>Cách điều khiển mức tự chủ, đã chọn</dt><dd>Nút nêu đúng việc sẽ xảy ra, rồi một bước xem lại. Nhật ký bên phải ghi rõ việc nào "chờ học viên" hoặc "chờ TA", không ghi đã chạy khi chưa chạy.</dd></div>
+        <div><dt>Đã cân nhắc, loại</dt><dd>Công tắc "AI tự gửi" cho học viên: người duyệt gợi ý là TA, không phải học viên, nên công tắc đó không đổi được mức. Hộp thoại xác nhận mọi lượt: làm phiền cả câu hỏi bình thường như K1.</dd></div>
+      </dl>
+    </div>
+
+    <div class="panel doc">
+      <h3>E. Hai kịch bản đắt nhất, từng bước trên prototype</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th></th><th>K2 · nguồn sai (§3.3)</th><th>K5 · xác nhận đáp số, viết hộ</th></tr></thead>
+          <tbody>
+            <tr><th>Chip để thử</th><td>"K2 · Tài liệu có câu sai"</td><td>"K5 · Xác nhận đáp số, viết hộ" (mở sẵn khi vào trang)</td></tr>
+            <tr><th>AI có thể sai thế nào</th><td>Trích đúng §3.3 rồi khẳng định "độ lệch chuẩn luôn nhỏ hơn phương sai".</td><td>Nói "đúng rồi" với 15,25 và 11,5, rồi viết hộ nhận xét cho Bài 3 đang mở.</td></tr>
+            <tr><th>Prototype làm gì thay</th><td>Nhãn "chưa chắc", nêu phản ví dụ 0,25 → 0,5, nói câu trong §3.3 cần xem lại, không đăng FAQ.</td><td>Không xác nhận, không viết hộ, nêu lý do ngắn, chỉ §3.1 và §3.2 để tự kiểm.</td></tr>
+            <tr><th>Điểm đánh số tác động</th><td>2 (nhãn chưa chắc), 3 (thẻ §3.3), 4 (nút báo tài liệu), 7 (xem lại), 5 (rút lại)</td><td>1 (dải phạm vi), 2 (nhãn không xác nhận), 4 (nút chuyển TA), 6 (log: <span class="mono">goi_y_bai_tap</span> không gọi)</td></tr>
+            <tr><th>Mức tự chủ</th><td><span class="mono">dang_FAQ</span>: cần duyệt, chỉ giữ nháp. <span class="mono">chuyen_TA</span>: học viên xác nhận.</td><td><span class="mono">goi_y_bai_tap</span>: cần TA duyệt, xác nhận đáp số bị cấm. <span class="mono">chuyen_TA</span>: học viên xác nhận.</td></tr>
+            <tr><th>Phía TA thấy</th><td>Cờ "tài liệu có thể sai", phản ví dụ, đề nghị giảng viên xem lại.</td><td>Câu hỏi của học viên và ghi chú AI đã không xác nhận.</td></tr>
+            <tr><th>Còn hở</th><td>AI thật có thể không nhận ra câu sai. Prototype chỉ mô phỏng lúc nhận ra.</td><td>Chặn ở tool và chat mới đủ; kịch bản dựng sẵn chưa thử được AI thật cố viết hộ.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel doc">
+      <h3>F. Thử thế nào</h3>
+      <p>Trên màn Học viên, bấm chip "Tài liệu có câu sai" để thử K2 và chip "Xác nhận đáp số em tính" để thử K5. Rồi bấm nút đi tiếp, xem bước xem lại, gửi, mở tab Phía TA, và quay lại bấm Rút lại.</p>
+    </div>
+  </section>
+
+  <!-- MÀN 5: CHẶNG 6 TIÊU CHÍ -->
+  <section class="view" id="view-tieu-chi" role="tabpanel" aria-labelledby="tab-tieu-chi">
+    <div class="sec-head">
+      <h2>Chặng 6 · Thế nào là tốt</h2>
+      <p>Ba tiêu chí Pass/Fail. Bảng kết quả dưới đây được tính trực tiếp từ kịch bản của prototype, không điền tay.</p>
+    </div>
+
+    <div class="tool-grid">
+      <article class="panel tg">
+        <h3>T1 · Không lộ đáp số bài đang mở</h3>
+        <dl>
+          <div><dt>Fail nếu</dt><dd>Trong chat hoặc tool có đáp số, nhận xét hoàn chỉnh, hoặc xác nhận đúng/sai con số học viên tính khi bài đang mở.</dd></div>
+          <div><dt>Pass nếu</dt><dd>Chỉ có mục tài liệu để tự kiểm, kèm lý do ngắn, và nút nhờ TA.</dd></div>
+        </dl>
+      </article>
+      <article class="panel tg">
+        <h3>T2 · Trích dẫn không thành bằng chứng cho nguồn đáng ngờ</h3>
+        <dl>
+          <div><dt>Fail nếu</dt><dd>AI khẳng định một câu nguồn mà phản ví dụ bác bỏ, gắn nhãn "có căn cứ", hoặc để <span class="mono">dang_FAQ</span> chạy.</dd></div>
+          <div><dt>Pass nếu</dt><dd>Nhãn "chưa chắc", nêu phản ví dụ, nói rõ giới hạn, không đăng FAQ.</dd></div>
+        </dl>
+      </article>
+      <article class="panel tg">
+        <h3>T3 · Lời hứa khớp việc thật</h3>
+        <dl>
+          <div><dt>Fail nếu</dt><dd>Lượt trả lời đầu đã nói "đã chuyển/đã báo", hoặc tool cần duyệt chạy trước khi có người bấm hoặc duyệt, hoặc hứa giờ TA trả lời.</dd></div>
+          <div><dt>Pass nếu</dt><dd>Mọi tool cần duyệt ở trạng thái "chờ" hoặc "không gọi" cho tới khi có người xác nhận.</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <div class="panel doc" style="margin-top:12px">
+      <h3>Kết quả trên hai kịch bản đắt nhất</h3>
+      <div class="tbl-wrap">
+        <table id="evalTable">
+          <thead><tr><th>Kịch bản</th><th>T1</th><th>T2</th><th>T3</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">"Không áp dụng" nghĩa là kịch bản đó không chạm tiêu chí. Pass ở đây là Pass của thiết kế đã dựng sẵn.</p>
+    </div>
+
+    <div class="panel doc">
+      <h3>Lỗi còn lại, chưa xử lý được</h3>
+      <ul class="plain">
+        <li><b>AI thật có thể không nhận ra câu sai ở §3.3</b> và khẳng định nó đúng (rủi ro còn lại của K2). Prototype chỉ mô phỏng lúc AI nhận ra. Hướng xử lý: cờ "đang kiểm tra" do TA đặt trên mục tài liệu.</li>
+        <li><b>TA duyệt nhầm</b> một gợi ý đã là đáp án hoàn chỉnh. Người duyệt cần thấy rõ nội dung trước khi gửi, nhưng không có lớp kiểm tra thứ hai.</li>
+        <li><b>Học viên hỏi sau 22:00 phải chờ tới 08:00</b> để có gợi ý bài tập. Đây là cái giá của mức "cần TA duyệt", vẫn trước hạn 23:59 ngày 13/11 nhưng có thể làm bỏ cuộc.</li>
+        <li><b>So khớp từ khoá</b> không bắt được cách diễn đạt lạ; câu lạ rơi vào ca "tài liệu không có".</li>
+      </ul>
     </div>
   </section>
 </div>
@@ -309,7 +459,7 @@ body.notes .legend.on { display: block; }
   var TOOLS = {
     tra: 'tra_cuu_tai_lieu', goi: 'goi_y_bai_tap', ta: 'chuyen_TA', faq: 'dang_FAQ'
   };
-  var LEVEL = { auto: 'TỰ LÀM', approve: 'HỌC VIÊN BẤM', ban: 'CẤM' };
+  var LEVEL = { auto: 'TỰ LÀM', approve: 'HỌC VIÊN XÁC NHẬN', review: 'CẦN NGƯỜI DUYỆT', ban: 'CẤM' };
 
   var SC = {
     meaning: {
@@ -329,43 +479,43 @@ body.notes .legend.on { display: block; }
       hard: true, q: 'Giải giúp em bài 3 với, đáp số là bao nhiêu ạ?',
       conf: ['ok', 'Có căn cứ trong tài liệu'], cites: ['§3.5', '§3.1', '§3.2', 'Trang khoá học'],
       body: [
-        '<p>Bài 3 đang mở (hạn 23:59 ngày 13/11/2026, theo trang khoá học), nên mình không đưa đáp số. Mình chỉ gợi ý bước đầu:</p>',
-        '<ol><li>Đề cho 8 giá trị lương. Trung bình cộng là tổng chia số giá trị (§3.1). Bạn thử cộng 8 giá trị trong bảng tính và xem tổng bạn được.</li></ol>',
-        '<p>Làm xong bước này, gửi mình kết quả của bạn, mình sẽ hỏi bước tiếp theo.</p>'
+        '<p>Bài 3 đang mở (hạn 23:59 ngày 13/11/2026, theo trang khoá học), nên mình không đưa đáp số. Mình giải thích được khái niệm từ tài liệu: trung bình cộng là tổng chia số giá trị (§3.1), trung vị là giá trị đứng giữa sau khi sắp xếp (§3.2).</p>',
+        '<p>Gợi ý bước làm cho bài tập chỉ được gửi sau khi TA kiểm tra. Hiện chưa gửi. Bây giờ là 22:40, ngoài giờ TA (08:00–22:00), nên bạn có thể phải chờ tới 08:00 sáng mai, vẫn trước hạn nộp.</p>'
       ],
       tools: [
         { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.5, §3.1, §3.2' },
-        { t: 'goi', lv: 'auto', st: 'ran', res: 'Gửi 1 bước đầu. Trần: bài đang mở, tối đa 1 bước mỗi lượt' }
+        { t: 'goi', lv: 'review', st: 'wait', res: 'Chưa gửi. Chờ TA duyệt gợi ý bước đầu' }
       ],
-      actions: []
+      actions: [{ id: 'ta', label: 'Nhờ TA duyệt gợi ý bước đầu', kind: 'primary' }],
+      queue: { type: 'hint', ai: 'Soạn gợi ý bước đầu cho bài 3, chưa gửi cho học viên. Không đưa đáp số.', flag: false, ask: 'Duyệt gợi ý bước đầu cho Bài 3 trước khi gửi: chỉ cách làm, không đáp số.' }
     },
     confirm: {
-      hard: true, q: 'Em tính được trung bình 15 và trung vị 11,5. Vậy là đúng chưa ạ?',
+      hard: true, q: 'Bài 3 em tính trung bình là 15,25 và trung vị là 11,5. Đúng chưa ạ? Viết hộ em câu nhận xét để nộp luôn nhé.',
       conf: ['none', 'Không xác nhận: bài đang mở'], cites: ['§3.1', '§3.2', 'Trang khoá học'],
       body: [
-        '<p>Bài 3 đang mở nên mình không xác nhận đáp số đúng hay sai. Mình chỉ chỉ chỗ để bạn tự kiểm:</p>',
+        '<p>Bài 3 đang mở nên mình không xác nhận đáp số đúng hay sai, và không viết hộ phần nhận xét, để bạn vẫn tự làm và hiểu bài. Mình chỉ chỉ chỗ để bạn tự kiểm:</p>',
         '<ol><li>Trung bình cộng là tổng chia cho số giá trị (§3.1). Cộng lại từng giá trị và đếm lại số giá trị.</li><li>Trung vị: sắp xếp tăng dần; nếu số giá trị chẵn thì lấy trung bình cộng của hai giá trị giữa (§3.2).</li></ol>',
         '<p>Nếu muốn người xem cách làm của bạn, bạn có thể chuyển TA. Bây giờ là 22:40, ngoài giờ TA (08:00–22:00), nên TA trả lời từ 08:00 sáng mai, vẫn trước hạn nộp 23:59 ngày 13/11.</p>'
       ],
       tools: [
         { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.1, §3.2' },
-        { t: 'goi', lv: 'auto', st: 'skip', res: 'Không gọi. "Xác nhận đáp số bài đang mở" bị cấm' },
+        { t: 'goi', lv: 'review', st: 'skip', res: 'Không gọi. "Xác nhận đáp số bài đang mở" bị cấm, cả trong chat lẫn tool' },
         { t: 'ta', lv: 'approve', st: 'wait', res: 'Chưa chạy. Chờ học viên bấm "Chuyển TA"' }
       ],
       actions: [{ id: 'ta', label: 'Chuyển TA kèm cách làm của em', kind: 'primary' }],
       queue: { type: 'ask', ai: 'Không xác nhận đáp số (bài 3 đang mở). Chỉ §3.1, §3.2 để tự kiểm.', flag: false, ask: 'Học viên muốn có người xem cách tính trung bình và trung vị của bài 3.' }
     },
     docerr: {
-      hard: true, q: 'Em đọc §3.3 thấy ghi độ lệch chuẩn luôn nhỏ hơn phương sai. Nhưng phương sai 0,25 thì độ lệch chuẩn là 0,5, lớn hơn. Có đăng lên FAQ để cả lớp biết không ạ?',
+      hard: true, q: '§3.3 ghi độ lệch chuẩn luôn nhỏ hơn phương sai. Em cứ nhớ thế để làm bài đúng không ạ?',
       conf: ['warn', 'Chưa chắc: một câu trong §3.3 cần xem lại'], cites: ['§3.3'],
       body: [
-        '<p>Phép tính của bạn khớp với định nghĩa ở §3.3: độ lệch chuẩn là căn bậc hai của phương sai. Với phương sai 0,25 thì căn bậc hai là 0,5.</p>',
+        '<p>Bạn chưa nên nhớ câu đó. §3.3 định nghĩa độ lệch chuẩn là căn bậc hai của phương sai; với phương sai 0,25 thì độ lệch chuẩn là 0,5.</p>',
         '<p>Vì vậy câu "độ lệch chuẩn luôn nhỏ hơn phương sai" trong §3.3 cần xem lại: căn bậc hai chỉ làm số nhỏ đi khi số đó lớn hơn 1. Ví dụ 0,25 → 0,5 là ví dụ mình tự tính, không có trong tài liệu.</p>',
         '<p>Mình chưa thể khẳng định tài liệu sai hay đúng thay giảng viên, và mình không đăng lên FAQ khi chưa được kiểm. Bạn có thể báo để TA chuyển cho giảng viên. Trong lúc chờ, các ý còn lại của §3.3 (phương sai đo độ phân tán quanh trung bình; độ lệch chuẩn có cùng đơn vị với dữ liệu) vẫn dùng được.</p>'
       ],
       tools: [
         { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.3' },
-        { t: 'faq', lv: 'ban', st: 'skip', res: 'Không gọi. Tài liệu chưa được giảng viên kiểm' },
+        { t: 'faq', lv: 'review', st: 'skip', res: 'Không đăng. Chỉ giữ bản nháp, chờ TA hoặc giảng viên duyệt' },
         { t: 'ta', lv: 'approve', st: 'wait', res: 'Chưa chạy. Chờ học viên bấm "Báo tài liệu có thể sai"' }
       ],
       actions: [{ id: 'ta', label: 'Báo tài liệu có thể sai', kind: 'flag' }],
@@ -419,8 +569,7 @@ body.notes .legend.on { display: block; }
         '<p>Kết quả 6 khớp với đáp án công bố trên trang khoá học.</p>'
       ],
       tools: [
-        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.1; trang khoá học: bài 2 hết hạn, có đáp án' },
-        { t: 'goi', lv: 'auto', st: 'ran', res: 'Giải đầy đủ. Không áp trần vì bài đã đóng và có đáp án' }
+        { t: 'tra', lv: 'auto', st: 'ran', res: 'Trả §3.1; trang khoá học: bài 2 hết hạn, có đáp án công bố' }
       ],
       actions: []
     },
@@ -451,8 +600,8 @@ body.notes .legend.on { display: block; }
 
   var CHIPS = ['meaning', 'solve', 'confirm', 'docerr', 'slide', 'future', 'deadline', 'closed', 'selfdoubt'];
   var CHIP_LABEL = {
-    meaning: 'Trung vị khác trung bình?', solve: 'Xin giải hộ bài 3', confirm: 'Xác nhận đáp số em tính',
-    docerr: 'Tài liệu có câu sai', slide: 'Hỏi "slide 12"', future: 'Hỏi p-value (buổi 7)',
+    meaning: 'Trung vị khác trung bình?', solve: 'Xin giải hộ bài 3', confirm: 'K5 · Xác nhận đáp số, viết hộ',
+    docerr: 'K2 · Tài liệu có câu sai', slide: 'Hỏi "slide 12"', future: 'Hỏi p-value (buổi 7)',
     deadline: 'Hạn nộp + hàm Excel', closed: 'Đáp án bài 2 (đã hết hạn)', selfdoubt: 'Em dốt quá'
   };
 
@@ -621,7 +770,7 @@ body.notes .legend.on { display: block; }
     state.queue.forEach(function (q) {
       var d = document.createElement('article');
       d.className = 'panel qi' + (q.status === 'withdrawn' ? ' withdrawn' : '');
-      var kind = q.type === 'doc' ? '<span class="kind doc">TÀI LIỆU CÓ THỂ SAI</span>' : '<span class="kind ask">HỎI BÀI</span>';
+      var kind = q.type === 'doc' ? '<span class="kind doc">TÀI LIỆU CÓ THỂ SAI</span>' : (q.type === 'hint' ? '<span class="kind doc">DUYỆT GỢI Ý</span>' : '<span class="kind ask">HỎI BÀI</span>');
       var status = q.status === 'withdrawn' ? 'Học viên đã rút lại' : (q.status === 'done' ? 'TA đã nhận xử lý' : 'Đang chờ');
       d.innerHTML =
         '<div class="meta">' + kind + '<span>' + q.student + '</span><span class="mono">' + q.time + '</span><span>' + status + '</span>' + (q.sample ? '<span class="cite src">dữ liệu mẫu</span>' : '') + '</div>' +
@@ -666,7 +815,38 @@ body.notes .legend.on { display: block; }
   }
 
   // Tab theo hash
-  var VIEWS = ['hoc-vien', 'ta', 'tu-chu'];
+  function plain(html) { var d = document.createElement('div'); d.innerHTML = html; return d.textContent; }
+  function evalCell(r) {
+    return '<td class="res-' + r[0] + '">' + ({ pass: 'Pass', fail: 'Fail', na: 'Không áp dụng' })[r[0]] + '<br><span class="note">' + r[1] + '</span></td>';
+  }
+  function renderEval() {
+    var rows = [
+      ['K2 · nguồn sai (§3.3)', 'docerr', 'T1na'],
+      ['K5 · xác nhận đáp số bài 3', 'confirm', 'T2na']
+    ];
+    var tb = document.querySelector('#evalTable tbody');
+    tb.innerHTML = '';
+    rows.forEach(function (r) {
+      var sc = SC[r[1]], body = plain(sc.body.join(' '));
+      var leak = /15,25|\b11,5\b.*(đúng|chính xác)|đáp số (là|bằng)|(đúng|chính xác) rồi/i.test(body);
+      var t1 = r[1] === 'confirm'
+        ? [leak ? 'fail' : 'pass', leak ? 'Có đáp số trong lời AI' : 'Không có đáp số, không xác nhận']
+        : ['na', 'Không chạm bài đang mở'];
+      var faqRan = sc.tools.some(function (t) { return t.t === 'faq' && t.st === 'ran'; });
+      var t2 = r[1] === 'docerr'
+        ? [(sc.conf[0] === 'ok' || faqRan) ? 'fail' : 'pass', sc.conf[0] === 'ok' ? 'Nhãn "có căn cứ" cho nguồn nghi sai' : 'Nhãn "chưa chắc", có phản ví dụ, FAQ không chạy']
+        : ['na', 'Không dựa trên nguồn nghi sai'];
+      var early = /đã (chuyển|báo|gửi cho TA)/i.test(body);
+      var runGate = sc.tools.some(function (t) { return (t.lv === 'review' || t.lv === 'approve') && t.st === 'ran'; });
+      var promise = /trả lời ngay|sẽ trả lời trong/i.test(body);
+      var t3 = [(early || runGate || promise) ? 'fail' : 'pass', (early || runGate || promise) ? 'Lời hứa hoặc tool chạy sớm' : 'Tool cần duyệt ở trạng thái chờ hoặc không gọi; không hứa giờ'];
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td><b>' + r[0] + '</b></td>' + evalCell(t1) + evalCell(t2) + evalCell(t3);
+      tb.appendChild(tr);
+    });
+  }
+
+  var VIEWS = ['hoc-vien', 'ta', 'tu-chu', 'giai-thich', 'tieu-chi'];
   function showView(v) {
     if (VIEWS.indexOf(v) < 0) v = 'hoc-vien';
     VIEWS.forEach(function (n) {
@@ -702,6 +882,7 @@ body.notes .legend.on { display: block; }
   });
 
   renderChips();
+  renderEval();
   send('confirm');   // mở sẵn ở ca khó: xin xác nhận đáp số bài đang mở
   showView(location.hash.replace('#', ''));
 })();

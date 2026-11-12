@@ -113,7 +113,7 @@ Thêm:
 Tool khó xếp nhất nên là `goi_y_bai_tap`, vì có hai cái giá đối nghịch: tự gửi thì có thể lộ quá nhiều nội dung; chờ TA thì học viên hỏi ban đêm có thể không nhận được gợi ý kịp lúc.
 
 Trong bản nộp, nhóm phải ghi lựa chọn thật của từng thành viên. Mình không biết các bạn đã chọn gì nên để chỗ điền, không tự bịa thay nhóm:
-- Thành viên 1 chọn — **Cần người duyệt:** “Nếu AI gợi ý quá tay, học viên có thể chép và nội dung đã gửi thì không thu hồi được. TA cần xem gợi ý trước khi gửi.”.
+- Lê  chọn — **Cần người duyệt:** “Nếu AI gợi ý quá tay, học viên có thể chép và nội dung đã gửi thì không thu hồi được. TA cần xem gợi ý trước khi gửi.”.
 - Thành viên 2 chọn — **Cấm tool hiện tại:** “Mô tả tool chỉ nói ‘gửi gợi ý’, chưa giới hạn đó là gợi ý bước đầu. Nếu không kiểm soát được nội dung, không nên để tool gửi cho bài đang mở.”
 - Thành viên 3 chọn — **Tự làm:** “Nếu chỉ gửi đúng một gợi ý bước đầu, học viên có thể tiếp tục học ngay lúc tối muộn. Chờ TA có thể khiến bạn bỏ cuộc. Cần giới hạn gợi ý, không đưa đáp số.”
 - Nhóm chốt **cần người duyệt**, vì K5 cho thấy bài 3 đang mở; gợi ý quá tay có thể bị chép và không thu hồi được. Nhóm chấp nhận việc một số gợi ý qua tool phải chờ TA, nhưng học viên vẫn có thể hỏi về kiến thức buổi 3 dựa trên tài liệu đã mở.
@@ -138,15 +138,62 @@ Nhóm có thể tách `goi_y_bai_tap` thành `soan_gui_y` và `gui_goi_y` để 
 ### Mức tự chủ đổi lời hứa với người dùng thế nào?
 Khi `goi_y_bai_tap` tự gửi, lời hứa là “**trợ lý gửi gợi ý ngay**”. Khi cần TA duyệt, lời hứa đổi thành “**trợ lý chỉ gửi gợi ý sau khi TA kiểm tra; nếu chưa duyệt, bạn có thể phải chờ.**” Nhóm cần thể hiện sự khác biệt đó trong prototype, để học viên không tưởng rằng gợi ý đã được gửi hoặc TA đang xử lý khi điều đó chưa xảy ra.
 
-**Hai việc nhóm cần tự điền để hoàn tất phần này:** lựa chọn ban đầu của từng thành viên cho tool khó xếp nhất; và xác nhận người duyệt `goi_y_bai_tap` là TA như bản nháp này hay một lựa chọn khác của nhóm.
-
 ## §5. Prototype  (chặng 5)
-- Link hoặc file · công cụ · phần nào mock · có lời gọi AI thật không.
-- 1–2 ảnh có đánh số; mỗi số: thể hiện gì · nguyên tắc HAX/PAIR nào · mức tự chủ nào.
-- Quyết định: cách hiện độ chắc/bằng chứng và điều khiển mức tự chủ — đã nghĩ tới cách nào khác, vì sao chọn cách này.
 
-## §6. Tốt là gì  (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
-- 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.
+### Thông tin chung
+- **File:** `protype/index.html`, xuất bản dưới dạng artifact "Trợ lý Study Buổi 3".
+- **Công cụ:** HTML/JS thuần, không thư viện.
+- **Phần thật:** giao diện, luồng bấm (đề xuất → xem lại → gửi → rút lại), hàng chờ TA, nhãn độ chắc, nhật ký tool.
+- **Phần mock:** lời AI là kịch bản dựng sẵn cho 9 ca, câu gõ tự do so khớp theo từ khoá; giờ cố định 22:40 ngày 12/11/2026; tài liệu §3.1–§3.5 và dữ liệu học viên là dữ liệu mẫu.
+- **Gọi AI thật:** không.
+
+### Bảy điểm đánh số trên màn Học viên
+| Số | Thể hiện gì | Nguyên tắc HAX/PAIR | Mức tự chủ | Vị trí |
+|---|---|---|---|---|
+| 1 | Dải phạm vi: chỉ dựa trên tài liệu buổi 1–3 và trang khoá học | HAX G1 | Áp cho cả bốn tool | Đầu khung chat |
+| 2 | Nhãn độ chắc: có căn cứ / chưa chắc / không có căn cứ | HAX G2; PAIR (độ tin cậy dựa trên bằng chứng) | `tra_cuu_tai_lieu`: tự làm | Dưới mỗi câu trả lời |
+| 3 | Thẻ nguồn (mã mục, "Trang khoá học"); thẻ nét đứt là "không tìm thấy" | HAX G11 | `tra_cuu_tai_lieu`: tự làm | Cạnh nhãn độ chắc |
+| 4 | Nút đi tiếp khi AI không chắc: chuyển TA, báo tài liệu có thể sai, nhờ TA duyệt gợi ý | HAX G10 | `chuyen_TA`: học viên xác nhận; `goi_y_bai_tap`: cần TA duyệt | Dưới câu trả lời ca khó |
+| 5 | "Đã đưa vào hàng chờ" kèm nút Rút lại, không hứa giờ trả lời | HAX G9 | `chuyen_TA`: học viên xác nhận | Sau khi gửi |
+| 6 | Nhật ký "Việc AI vừa làm": tool nào, mức nào, đã chạy hay đang chờ | HAX G11; PAIR (điều khiển và kiểm soát) | Cả bốn tool | Cột bên phải |
+| 7 | Bước xem lại: gửi gì, không gửi gì, khi nào có trả lời | PAIR (điều khiển) | `chuyen_TA`, `goi_y_bai_tap` | Sau khi bấm nút đề xuất |
+
+### Ba màn hình
+- **Học viên:** điều học viên nhìn thấy (câu trả lời, độ chắc, nguồn, nút đi tiếp, lời hứa).
+- **Phía TA:** điều người duyệt nhận (câu hỏi, AI đã nói gì, căn cứ, hạn bài, cờ "tài liệu có thể sai"); chỉ có câu học viên đã bấm gửi.
+- **Mức tự chủ:** bốn tool, mức đã chốt ở §4, người duyệt, ca đã thử.
+
+### Quyết định thiết kế
+- **Cách hiện độ chắc/bằng chứng — chọn:** ba nhãn chữ kèm thẻ nguồn. Ca K2 dùng nhãn "chưa chắc" vì nguồn có trích dẫn nhưng một câu trong đó bị nghi sai.
+  - *Đã loại thanh phần trăm tin cậy:* số giả chính xác, học viên không có cách kiểm.
+  - *Đã loại thẻ nguồn đứng một mình:* K2 cho thấy thẻ nguồn làm câu sai trông đáng tin hơn.
+- **Cách điều khiển mức tự chủ — chọn:** nút nêu đúng việc sẽ xảy ra, một bước xem lại, nhật ký ghi rõ việc nào đang "chờ học viên" hoặc "chờ TA".
+  - *Đã loại công tắc "AI tự gửi" cho học viên:* người duyệt gợi ý là TA, nên học viên không đổi được mức đó.
+  - *Đã loại hộp thoại xác nhận mọi lượt:* làm phiền cả câu hỏi bình thường như K1.
+- **Đã sửa prototype cho khớp §4:** bản đầu để `goi_y_bai_tap` tự làm có trần; nhóm đã chốt cần TA duyệt nên ca "xin giải hộ bài 3" nay chỉ giải thích khái niệm và chờ TA duyệt gợi ý. `dang_FAQ` chỉ giữ bản nháp chờ TA/giảng viên duyệt.
+
+## §6. Tốt là gì  (chặng 6)
+
+### Ba tiêu chí Pass/Fail
+| Mã | Fail nếu | Pass nếu |
+|---|---|---|
+| T1 · Không lộ đáp số bài đang mở | Chat hoặc tool có đáp số, nhận xét hoàn chỉnh, hoặc xác nhận đúng/sai con số học viên tính khi bài đang mở | Chỉ có mục tài liệu để tự kiểm, kèm lý do ngắn và nút nhờ TA |
+| T2 · Trích dẫn không thành bằng chứng cho nguồn đáng ngờ | AI khẳng định câu nguồn mà phản ví dụ bác bỏ, gắn nhãn "có căn cứ", hoặc `dang_FAQ` chạy | Nhãn "chưa chắc", nêu phản ví dụ, nói rõ giới hạn, không đăng FAQ |
+| T3 · Lời hứa khớp việc thật | Nói "đã chuyển/đã báo" ở lượt đầu, tool cần duyệt chạy trước khi có người xác nhận, hoặc hứa giờ TA trả lời | Mọi tool cần duyệt ở trạng thái "chờ" hoặc "không gọi" cho tới khi có người xác nhận |
+
+### Kết quả trên hai kịch bản đắt nhất (prototype, kịch bản dựng sẵn)
+| Kịch bản | T1 | T2 | T3 |
+|---|---|---|---|
+| K2 | Không áp dụng | Pass: nhãn "chưa chắc", có phản ví dụ 0,25 → 0,5, FAQ không chạy | Pass: `chuyen_TA` chờ học viên bấm, `dang_FAQ` chỉ giữ nháp |
+| K5 | Pass: không đáp số, không xác nhận, `goi_y_bai_tap` không gọi | Không áp dụng | Pass: không hứa giờ TA; gợi ý chờ duyệt |
+
+Pass chỉ chứng minh thiết kế, vì prototype không gọi AI thật.
+
+### Lỗi còn lại
+- AI thật có thể không nhận ra câu sai ở §3.3 và khẳng định nó đúng (rủi ro còn lại của K2). Hướng xử lý: cờ "đang kiểm tra" do TA đặt trên mục tài liệu.
+- TA có thể duyệt nhầm một gợi ý đã là đáp án hoàn chỉnh; chưa có lớp kiểm tra thứ hai.
+- Học viên hỏi sau 22:00 phải chờ tới 08:00 để có gợi ý bài tập; vẫn trước hạn 23:59 ngày 13/11 nhưng có thể làm bỏ cuộc.
+- So khớp từ khoá không bắt được cách diễn đạt lạ.
 
 ## §7. Demo
 - Ca lạ nhận được ở demo: prototype đã làm gì, và nhóm có đổi ý gì sau ca đó không.
